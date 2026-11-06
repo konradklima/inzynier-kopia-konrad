@@ -1,0 +1,27 @@
+# Python
+__pycache__/
+*.py[cod]
+*.egg-info/
+.venv/
+venv/
+build/
+dist/
+.pytest_cache/
+
+# IDE
+.idea/
+*.iml
+.vscode/
+
+# Local scan history
+*.db
+
+# Generated HTML reports (the raw ZAP JSON reports are kept)
+reports/*.html
+
+# Timestamped reports from ad-hoc scans (only the named reference reports are kept)
+reports/zap-*-[0-9]*.json
+
+# System
+.DS_Store
+Thumbs.db

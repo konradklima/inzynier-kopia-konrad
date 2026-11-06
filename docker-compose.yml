@@ -1,0 +1,10 @@
+# Scan target: OWASP Juice Shop, an intentionally vulnerable training app.
+# Start: docker compose up -d   (then open http://localhost:3000)
+# ZAP is not a service here: alert-scanner --scan starts a fresh ZAP container per scan.
+services:
+  juice-shop:
+    image: bkimminich/juice-shop:latest
+    container_name: alert-scanner-juice-shop
+    ports:
+      - "3000:3000"
+    restart: unless-stopped
