@@ -20,7 +20,7 @@ from alert_scanner.domain import Finding, Severity, Verdict
 from alert_scanner.known_vulnerabilities import KNOWN_APPS, Coverage
 from alert_scanner.report_html import write_html_report
 from alert_scanner.risk_rules import Assessment, assess
-from alert_scanner.scanner import ScanError, ScanMode, run_zap_scan
+from alert_scanner.scanner import ScanError, ScanMode, ScanScope, discover_subpages, run_zap_scan
 from alert_scanner.storage import Storage
 from alert_scanner.zap_parser import (
     ZapReportError,
@@ -123,11 +123,20 @@ class Console:
 
 def _analyze(args: argparse.Namespace, console: Console) -> int:
     if args.scan:
+        scope = _resolve_scope(args.scope, console)
+        seed_urls: list[str] | None = None
+        if scope is ScanScope.SITE:
+            console.line(console.dim(f"Discovering subpages on {args.scan} ..."))
+            seed_urls = discover_subpages(args.scan)
+            console.line(console.dim(f"Found {len(seed_urls)} URL(s) to scan"))
         report_path = Path(args.save_report or _default_report_path(args.mode))
-        console.line(console.dim(f"Running OWASP ZAP ({args.mode}) against {args.scan} ..."))
+        console.line(console.dim(
+            f"Running OWASP ZAP ({args.mode}, scope: {scope.value}) against {args.scan} ..."
+        ))
         run_zap_scan(
             args.scan, report_path, ScanMode(args.mode),
-            ajax=args.ajax, spider_minutes=args.spider_minutes, max_scan_minutes=args.max_minutes,
+            scope=scope, ajax=args.ajax, spider_minutes=args.spider_minutes,
+            max_scan_minutes=args.max_minutes, seed_urls=seed_urls,
         )
         console.line(console.dim(f"Raw ZAP report saved to {report_path}"))
     else:
@@ -223,6 +232,23 @@ def _default_report_path(mode: str) -> str:
     return f"reports/zap-{mode}-{datetime.now():%Y%m%d-%H%M%S}.json"
 
 
+def _resolve_scope(raw_scope: str | None, console: Console) -> ScanScope:
+    if raw_scope:
+        return ScanScope(raw_scope)
+    if not sys.stdin.isatty():
+        return ScanScope.SITE
+    console.line("Choose scan scope:")
+    console.line("  [1] All subpages (site) - default")
+    console.line("  [2] Main page only (page)")
+    try:
+        choice = input("Scope [1/2]: ").strip().lower()
+    except EOFError:
+        return ScanScope.SITE
+    if choice in ("2", "page", "main"):
+        return ScanScope.PAGE
+    return ScanScope.SITE
+
+
 def _shorten(text: str, limit: int) -> str:
     text = " ".join(text.split())
     return text if len(text) <= limit else text[: limit - 3] + "..."
@@ -258,6 +284,8 @@ def _build_parser() -> argparse.ArgumentParser:
                            default=ScanMode.BASELINE.value,
                            help="baseline: passive, fast; full: active, all rules, slow; "
                                 "focused: active, catalog rules only")
+    live_scan.add_argument("--scope", choices=[scope.value for scope in ScanScope],
+                           help="site: main page and all subpages; page: only the given URL")
     live_scan.add_argument("--ajax", action="store_true",
                            help="use the AJAX spider (needed for single-page apps such as Juice Shop)")
     live_scan.add_argument("--spider-minutes", type=int, metavar="N", help="time limit for the spider")

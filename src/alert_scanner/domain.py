@@ -5,7 +5,7 @@ The rest of the code works only with this model, never with the scanner format.
 """
 
 from __future__ import annotations
-from dataclasses import dataclass, replace
+from dataclasses import dataclass, field, replace
 from enum import IntEnum
 from urllib.parse import urlsplit
 
@@ -35,9 +35,13 @@ class Finding:
     evidence: str = ""
     verdict: Verdict | None = None
     rank: int | None = None
+    locations: tuple[Location, ...] = field(default=(), compare=False)
 
     def with_assessment(self, verdict: Verdict, rank: int | None) -> Finding:
         return replace(self, verdict=verdict, rank=rank)
+
+    def all_locations(self) -> tuple[Location, ...]:
+        return self.locations if self.locations else (self.location,)
 
 
 @dataclass(frozen=True, slots=True)
@@ -46,13 +50,17 @@ class Location:
     method: str = "GET"
     param: str = ""
 
-    def short_path(self) -> str:
-        """Path without scheme and host, e.g. '/api/login [email]'."""
+    def page_path(self) -> str:
+        """Page path without query or parameter, e.g. '/zamow-probki/'."""
         parts = urlsplit(self.uri)
         path = parts.path or "/"
-        # Single-page apps keep their route in the fragment, e.g. /#/search
         if parts.fragment.startswith("/"):
             path = path.rstrip("/") + "/#" + parts.fragment.split("?")[0]
+        return path
+
+    def short_path(self) -> str:
+        """Path without scheme and host, e.g. '/api/login [email]'."""
+        path = self.page_path()
         return f"{path} [{self.param}]" if self.param else path
 
 

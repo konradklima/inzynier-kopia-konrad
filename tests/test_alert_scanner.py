@@ -7,9 +7,9 @@ from alert_scanner.cli import main
 from alert_scanner.domain import Confidence, Finding, Location, Severity, Verdict
 from alert_scanner.known_vulnerabilities import juice_shop_coverage
 from alert_scanner.risk_rules import assess, classify
-from alert_scanner.scanner import ScanMode, build_docker_command, build_focused_plan
+from alert_scanner.scanner import ScanMode, ScanScope, build_docker_command, build_focused_plan, discover_subpages
 from alert_scanner.storage import Storage
-from alert_scanner.zap_parser import ZapReportError, parse_report
+from alert_scanner.zap_parser import ZapReportError, parse_report, same_origin
 
 TARGET = "http://target:3000"
 FULL_SCAN_REPORT = Path(__file__).parent.parent / "reports" / "zap-full-juiceshop.json"
@@ -107,6 +107,52 @@ def test_scan_modes_run_the_right_zap_commands():
     assert 'defaultThreshold: "off"' in plan  # every rule is off unless listed below
     for rule in catalog.focused_scan_rules():
         assert f"- id: {rule}\n" in plan
+
+
+def test_scan_scope_page_skips_spider_and_limits_depth():
+    page_cmd = build_docker_command(TARGET, ScanMode.BASELINE, "workdir", scope=ScanScope.PAGE)
+    assert "spider.maxDepth=1" in " ".join(page_cmd)
+
+    page_plan = build_focused_plan(TARGET, scope=ScanScope.PAGE)
+    assert "type: requestor" in page_plan
+    assert "type: spider" not in page_plan
+
+    site_plan = build_focused_plan(
+        TARGET, scope=ScanScope.SITE, seed_urls=[TARGET, f"{TARGET}/about"]
+    )
+    assert "type: spider" in site_plan
+    assert f"'{TARGET}/about'" in site_plan
+
+
+def test_discover_subpages_reads_sitemap_and_links(monkeypatch):
+    responses = {
+        f"{TARGET}/robots.txt": ("Sitemap: http://target:3000/sitemap.xml", f"{TARGET}/robots.txt"),
+        f"{TARGET}/sitemap.xml": (
+            "<urlset><url><loc>http://target:3000/contact</loc></url></urlset>",
+            f"{TARGET}/sitemap.xml",
+        ),
+        f"{TARGET}/": (
+            '<a href="/offer">Offer</a><a href="https://external.example/x">Out</a>',
+            f"{TARGET}/",
+        ),
+    }
+    monkeypatch.setattr(
+        "alert_scanner.scanner._fetch_raw",
+        lambda url, timeout, *, accept: responses.get(url, ("", url)),
+    )
+
+    urls = discover_subpages(TARGET)
+
+    assert f"{TARGET}/" in urls
+    assert f"{TARGET}/contact" in urls
+    assert f"{TARGET}/offer" in urls
+    assert not any("external.example" in url for url in urls)
+
+
+def test_same_origin_matches_www_and_subdomains():
+    assert same_origin("https://example.com", "https://www.example.com")
+    assert same_origin("https://example.com", "https://shop.example.com")
+    assert not same_origin("https://example.com", "https://other.org")
 
 
 def test_real_full_scan_report_end_to_end(tmp_path, capsys):

@@ -13,6 +13,7 @@ from __future__ import annotations
 import html
 import json
 import re
+from dataclasses import replace
 from pathlib import Path
 from typing import Any
 from urllib.parse import urlsplit
@@ -26,14 +27,19 @@ def parse_report(report: dict[str, Any], target: str | None = None) -> list[Find
     sites that its browser loaded while crawling (links to GitHub, Facebook and so on),
     and those are not the site we were asked to scan.
     """
-    findings = []
+    by_key: dict[tuple[str, str], Finding] = {}
     for site in _sites(report):
         site_name = site.get("@name", "")
         if target and not same_origin(site_name, target):
             continue
         for alert in site.get("alerts") or []:
-            findings.append(_parse_alert(alert, site_name))
-    return findings
+            finding = _parse_alert(alert, site_name)
+            key = (finding.rule_id, finding.name)
+            if key in by_key:
+                by_key[key] = _merge_findings(by_key[key], finding)
+            else:
+                by_key[key] = finding
+    return list(by_key.values())
 
 
 def parse_report_file(path: str | Path, target: str | None = None) -> list[Finding]:
@@ -71,8 +77,22 @@ def foreign_sites(report: dict[str, Any], target: str) -> dict[str, int]:
 
 
 def same_origin(first_url: str, second_url: str) -> bool:
-    """Same scheme, host and port (default ports filled in)."""
-    return _origin(first_url) == _origin(second_url)
+    """True when both URLs belong to the same site (including www. and subdomains)."""
+    first_scheme, first_host, first_port = _origin(first_url)
+    second_scheme, second_host, second_port = _origin(second_url)
+    if not first_host or not second_host:
+        return False
+    same_host = (
+        first_host == second_host
+        or first_host.endswith("." + second_host)
+        or second_host.endswith("." + first_host)
+    )
+    if not same_host:
+        return False
+    # Allow http <-> https redirects on standard ports (80/443), but keep custom ports distinct.
+    if {first_port, second_port} <= {80, 443, None}:
+        return True
+    return first_scheme == second_scheme and first_port == second_port
 
 
 def strip_html(text: str) -> str:
@@ -99,16 +119,22 @@ def _sites(report: dict[str, Any]) -> list[dict[str, Any]]:
 def _parse_alert(alert: dict[str, Any], site_name: str) -> Finding:
     instances = alert.get("instances") or []
     first_instance = instances[0] if instances else {}
+    locations = tuple(
+        dict.fromkeys(
+            Location(
+                uri=instance.get("uri") or site_name,
+                method=instance.get("method") or "GET",
+                param=instance.get("param") or "",
+            )
+            for instance in (instances or [{}])
+        )
+    )
     return Finding(
         rule_id=str(alert.get("pluginid", "")),
         name=alert.get("name") or alert.get("alert") or "Unknown alert",
         severity=_to_enum(Severity, alert.get("riskcode"), "riskcode"),
         confidence=_to_enum(Confidence, alert.get("confidence"), "confidence"),
-        location=Location(
-            uri=first_instance.get("uri") or site_name,
-            method=first_instance.get("method") or "GET",
-            param=first_instance.get("param") or "",
-        ),
+        location=locations[0],
         cwe_id=_positive_int(alert.get("cweid")),
         wasc_id=_positive_int(alert.get("wascid")),
         description=strip_html(alert.get("desc", "")),
@@ -116,6 +142,18 @@ def _parse_alert(alert: dict[str, Any], site_name: str) -> Finding:
         occurrences=_positive_int(alert.get("count")) or max(len(instances), 1),
         attack=_truncate(first_instance.get("attack")),
         evidence=_truncate(first_instance.get("evidence")),
+        locations=locations,
+    )
+
+
+def _merge_findings(first: Finding, second: Finding) -> Finding:
+    merged_locations = tuple(dict.fromkeys((*first.all_locations(), *second.all_locations())))
+    return replace(
+        first,
+        severity=max(first.severity, second.severity),
+        confidence=max(first.confidence, second.confidence),
+        occurrences=first.occurrences + second.occurrences,
+        locations=merged_locations,
     )
 
 

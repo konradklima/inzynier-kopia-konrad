@@ -43,6 +43,7 @@ na tym samym komputerze.
 Dodatkowe opcje:
 
 - `--mode` wybiera tryb skanu (opis niżej),
+- `--scope` wybiera zakres: `site` (wszystkie podstrony) albo `page` (tylko główna strona),
 - `--ajax` włącza pająka z przeglądarką, potrzebnego przy aplikacjach takich jak Juice Shop,
 - `--compare juice-shop` porównuje wynik ze znanymi podatnościami Juice Shopa,
 - `--show-filtered` pokazuje też odrzucone alerty,
@@ -81,3 +82,67 @@ Kod jest w `src/alert_scanner/`:
 - `report_html.py` - tymczasowy raport HTML
 
 W `reports/` są dwa gotowe raporty ZAP-a ze skanu Juice Shopa: pasywny i aktywny.
+
+## Przykłady skanowania
+
+Szybki skan pasywny własnej strony wraz z podstronami, bez ryzyka dla serwera:
+
+```sh
+alert-scanner --scan https://twoja-strona.pl --scope site --mode baseline --html reports/strona.html
+```
+
+- `alert-scanner` - uruchamia program,
+- `--scan https://twoja-strona.pl` - skanuje podaną stronę na żywo, w jej miejsce wpisz własny adres,
+- `--scope site` - sprawdza stronę główną i szybko odkrywa wszystkie podstrony (`--scope page` sprawdza tylko stronę główną),
+- `--mode baseline` - skan pasywny, ZAP tylko ogląda odpowiedzi serwera,
+- `--html reports/strona.html` - zapisuje raport HTML z podziałem na podstrony w podanym pliku.
+
+Skan aktywny z ograniczeniem czasu, żeby nie trwał dłużej niż pół godziny:
+
+```sh
+alert-scanner --scan https://twoja-strona.pl --scope site --mode full --max-minutes 30
+```
+
+- `--mode full` - skan aktywny ze wszystkimi regułami ZAP-a, czyli prawdziwe ataki,
+- `--max-minutes 30` - przerywa skan aktywny po 30 minutach.
+
+Skan aktywny tylko z regułami z naszego katalogu zagrożeń, z pająkiem z przeglądarką:
+
+```sh
+alert-scanner --scan https://twoja-strona.pl --scope site --mode focused --ajax
+```
+
+- `--mode focused` - skan aktywny tylko z regułami z naszego katalogu zagrożeń,
+- `--ajax` - pająk z przeglądarką, który wykonuje JavaScript i znajduje więcej podstron.
+
+Skan Juice Shopa z porównaniem do znanych podatności i zapisem surowego raportu ZAP-a:
+
+```sh
+alert-scanner --scan http://host.docker.internal:3000 --scope site --mode full --ajax --compare juice-shop --save-report reports/juiceshop.json
+```
+
+- `--scan http://host.docker.internal:3000` - adres Juice Shopa na tym samym komputerze, widziany
+  z kontenera ze skanerem (`3000` to port aplikacji),
+- `--compare juice-shop` - porównuje wynik ze znanymi podatnościami Juice Shopa,
+- `--save-report reports/juiceshop.json` - zapisuje surowy raport ZAP-a w podanym pliku.
+
+Analiza gotowego raportu z pokazaniem też odrzuconych alertów, bez zapisu w historii:
+
+```sh
+alert-scanner --report reports/zap-full-juiceshop.json --show-filtered --no-store
+```
+
+- `--report reports/zap-full-juiceshop.json` - analizuje gotowy raport, bez Dockera i bez skanowania,
+- `--show-filtered` - pokazuje też odrzucone alerty,
+- `--no-store` - nie zapisuje wyniku w historii (`scans.db`).
+
+Powrót do wcześniejszych wyników:
+
+```sh
+alert-scanner --history
+alert-scanner --load 3
+```
+
+- `--history` - pokazuje listę zapisanych skanów z ich numerami,
+- `--load 3` - otwiera zapisany skan o numerze 3.
+

@@ -33,6 +33,7 @@ def render_html(target: str, assessment: Assessment, *, source: str = "",
         summary=_summary(assessment),
         scope=f'<p class="note">{escape(scope_note)}</p>' if scope_note else "",
         findings=_findings_table(assessment.real),
+        by_page=_by_page_table(assessment.real),
         filtered=_filtered_table([*assessment.noise, *assessment.false_positives]),
     )
 
@@ -74,9 +75,48 @@ def _finding_row(finding: Finding) -> str:
         f'<td><span class="risk risk-{severity}">{severity}</span></td>'
         f"<td><strong>{escape(category.title)}</strong>"
         f'<div class="tech">{escape(" | ".join(technical_details))}</div></td>'
-        f"<td><code>{escape(finding.location.short_path())}</code></td>"
+        f"<td>{_format_locations(finding)}</td>"
         f'<td class="num">{finding.occurrences}</td>'
         "</tr>"
+    )
+
+
+def _format_locations(finding: Finding) -> str:
+    paths = list(dict.fromkeys(loc.short_path() for loc in finding.all_locations()))
+    visible = [f"<div><code>{escape(path)}</code></div>" for path in paths[:4]]
+    if len(paths) > 4:
+        more = "".join(f"<div><code>{escape(path)}</code></div>" for path in paths[4:])
+        visible.append(
+            f'<details class="more-pages"><summary>+{len(paths) - 4} more page(s)</summary>'
+            f"{more}</details>"
+        )
+    return "".join(visible)
+
+
+def _by_page_table(findings: list[Finding]) -> str:
+    if not findings:
+        return '<p class="note">No issues found on any page.</p>'
+    pages: dict[str, list[Finding]] = {}
+    for finding in findings:
+        for page in dict.fromkeys(loc.page_path() for loc in finding.all_locations()):
+            pages.setdefault(page, []).append(finding)
+    rows = []
+    for page, page_findings in sorted(pages.items(), key=lambda item: (-len(item[1]), item[0])):
+        items = "".join(
+            f'<div class="page-issue"><span class="risk risk-{f.severity.label}">{f.severity.label}</span> '
+            f"<strong>{escape(catalog.categorize(f).title)}</strong> "
+            f'<span class="tech">({escape(f.name)})</span></div>'
+            for f in page_findings
+        )
+        rows.append(
+            f"<tr><td><code>{escape(page)}</code></td>"
+            f"<td>{items}</td>"
+            f'<td class="num">{len(page_findings)}</td></tr>'
+        )
+    return (
+        '<div class="wrap"><table><thead><tr>'
+        '<th>Page</th><th>Issues on this page</th><th class="num">Count</th>'
+        f'</tr></thead><tbody>{"".join(rows)}</tbody></table></div>'
     )
 
 
@@ -110,6 +150,8 @@ _PAGE_TEMPLATE = """<!doctype html>
 {scope}
 <h2>Issues to fix</h2>
 {findings}
+<h2>Issues by page</h2>
+{by_page}
 <h2>Filtered out</h2>
 {filtered}
 </main>
@@ -150,4 +192,6 @@ code { font: 13px ui-monospace, SFMono-Regular, Consolas, monospace; word-break:
 .risk-high { color: var(--high); }
 .risk-medium { color: var(--medium); }
 .risk-low { color: var(--low); }
+.page-issue { margin: 4px 0; }
+.more-pages summary { cursor: pointer; color: var(--muted); font-size: 12px; margin-top: 2px; }
 """
