@@ -1,0 +1,54 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Scan report: https://pimex.pl</title>
+<style>
+:root {
+  --bg: #ffffff; --fg: #1d1d1f; --muted: #6e6e73; --line: #e5e5ea;
+  --high: #c62828; --medium: #a65f00; --low: #1565c0;
+}
+@media (prefers-color-scheme: dark) {
+  :root {
+    --bg: #1c1c1e; --fg: #f5f5f7; --muted: #a1a1a6; --line: #3a3a3c;
+    --high: #ff6b6b; --medium: #ffb340; --low: #64b5f6;
+  }
+}
+body {
+  margin: 0; background: var(--bg); color: var(--fg);
+  font: 15px/1.5 -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+}
+main { max-width: 980px; margin: 0 auto; padding: 32px 16px 48px; }
+h1 { font-size: 26px; margin: 0 0 4px; }
+h2 { font-size: 18px; margin: 32px 0 8px; }
+.note, .tech { color: var(--muted); font-size: 13px; }
+.summary { font-size: 17px; margin: 16px 0 4px; }
+.wrap { overflow-x: auto; }
+table { width: 100%; border-collapse: collapse; }
+th, td { text-align: left; vertical-align: top; padding: 10px 8px; border-bottom: 1px solid var(--line); }
+th { font-size: 12px; font-weight: 600; color: var(--muted); text-transform: uppercase; letter-spacing: .04em; }
+.num { text-align: right; font-variant-numeric: tabular-nums; }
+code { font: 13px ui-monospace, SFMono-Regular, Consolas, monospace; word-break: break-all; }
+.risk {
+  font-size: 12px; font-weight: 600; text-transform: capitalize; white-space: nowrap;
+  padding: 1px 8px; border: 1px solid currentColor; border-radius: 999px;
+}
+.risk-high { color: var(--high); }
+.risk-medium { color: var(--medium); }
+.risk-low { color: var(--low); }
+</style>
+</head>
+<body>
+<main>
+<h1>Scan report</h1>
+<p class="note">Target: https://pimex.pl &middot; Source: zap-full-20261109-140127.json &middot; Generated: 2026-11-09 14:22</p>
+<p class="summary"><strong>12</strong> issue(s) to fix (1 high, 4 medium, 7 low). 8 of 20 scanner alerts filtered out (40%).</p>
+<p class="note">Ignored 16 alert(s) from 2 other site(s) loaded during the scan, e.g. https://www.pimex.pl, http://www.pimex.pl</p>
+<h2>Issues to fix</h2>
+<div class="wrap"><table><thead><tr><th class="num">#</th><th>Risk</th><th>Issue</th><th>Where</th><th class="num">Count</th></tr></thead><tbody><tr class="finding"><td class="num">1</td><td><span class="risk risk-high">high</span></td><td><strong>The site uses outdated components with known vulnerabilities</strong><div class="tech">PHP Version with Known Vulnerabilities | CWE-1395 | A06:2021 Vulnerable and Outdated Components</div></td><td><code>/sitemap.xml</code></td><td class="num">1</td></tr><tr class="finding"><td class="num">2</td><td><span class="risk risk-medium">medium</span></td><td><strong>The site trusts scripts from other servers</strong><div class="tech">Sub Resource Integrity Attribute Missing | CWE-345 | A08:2021 Software and Data Integrity Failures</div></td><td><code>/sitemap.xml</code></td><td class="num">5</td></tr><tr class="finding"><td class="num">3</td><td><span class="risk risk-medium">medium</span></td><td><strong>Browser security features are not turned on</strong><div class="tech">Content Security Policy (CSP) Header Not Set | CWE-693 | A05:2021 Security Misconfiguration</div></td><td><code>/sitemap.xml</code></td><td class="num">1</td></tr><tr class="finding"><td class="num">4</td><td><span class="risk risk-medium">medium</span></td><td><strong>Other configuration issue</strong><div class="tech">Relative Path Confusion | CWE-20</div></td><td><code>/sitemap.xml</code></td><td class="num">1</td></tr><tr class="finding"><td class="num">5</td><td><span class="risk risk-medium">medium</span></td><td><strong>Another site can act on behalf of your visitors</strong><div class="tech">Absence of Anti-CSRF Tokens | CWE-352 | A01:2021 Broken Access Control</div></td><td><code>/sitemap.xml</code></td><td class="num">1</td></tr><tr class="finding"><td class="num">6</td><td><span class="risk risk-low">low</span></td><td><strong>Traffic to the site is not fully encrypted</strong><div class="tech">Strict-Transport-Security Header Not Set | CWE-319 | A02:2021 Cryptographic Failures</div></td><td><code>/</code></td><td class="num">5</td></tr><tr class="finding"><td class="num">7</td><td><span class="risk risk-low">low</span></td><td><strong>The site trusts scripts from other servers</strong><div class="tech">Cross-Domain JavaScript Source File Inclusion | CWE-829 | A08:2021 Software and Data Integrity Failures</div></td><td><code>/sitemap.xml [https://www.pimex.pl/wp-content/plugins/cookie-notice/js/front.min.js?ver=3.1.17]</code></td><td class="num">5</td></tr><tr class="finding"><td class="num">8</td><td><span class="risk risk-low">low</span></td><td><strong>The site reveals too much about itself</strong><div class="tech">Server Leaks Information via &quot;X-Powered-By&quot; HTTP Response Header Field(s) | CWE-497 | A05:2021 Security Misconfiguration</div></td><td><code>/sitemap.xml</code></td><td class="num">2</td></tr><tr class="finding"><td class="num">9</td><td><span class="risk risk-low">low</span></td><td><strong>User logins are weakly protected</strong><div class="tech">Cookie No HttpOnly Flag | CWE-1004 | A07:2021 Identification and Authentication Failures</div></td><td><code>/zamow-probki/ [PHPSESSID]</code></td><td class="num">1</td></tr><tr class="finding"><td class="num">10</td><td><span class="risk risk-low">low</span></td><td><strong>User logins are weakly protected</strong><div class="tech">Cookie Without Secure Flag | CWE-614 | A07:2021 Identification and Authentication Failures</div></td><td><code>/zamow-probki/ [PHPSESSID]</code></td><td class="num">1</td></tr><tr class="finding"><td class="num">11</td><td><span class="risk risk-low">low</span></td><td><strong>User logins are weakly protected</strong><div class="tech">Cookie without SameSite Attribute | CWE-1275 | A07:2021 Identification and Authentication Failures</div></td><td><code>/zamow-probki/ [PHPSESSID]</code></td><td class="num">1</td></tr><tr class="finding"><td class="num">12</td><td><span class="risk risk-low">low</span></td><td><strong>Browser security features are not turned on</strong><div class="tech">Permissions Policy Header Not Set | CWE-693 | A05:2021 Security Misconfiguration</div></td><td><code>/sitemap.xml</code></td><td class="num">1</td></tr></tbody></table></div>
+<h2>Filtered out</h2>
+<div class="wrap"><table><thead><tr><th>Alert</th><th>Verdict</th><th>Reason</th></tr></thead><tbody><tr><td>Timestamp Disclosure - Unix</td><td>noise</td><td>low risk and low scanner confidence</td></tr><tr><td>Cookie Slack Detector</td><td>noise</td><td>informational, not a threat by itself</td></tr><tr><td>Modern Web Application</td><td>noise</td><td>informational, not a threat by itself</td></tr><tr><td>Non-Storable Content</td><td>noise</td><td>informational, not a threat by itself</td></tr><tr><td>Session Management Response Identified</td><td>noise</td><td>informational, not a threat by itself</td></tr><tr><td>Storable and Cacheable Content</td><td>noise</td><td>informational, not a threat by itself</td></tr><tr><td>Storable but Non-Cacheable Content</td><td>noise</td><td>informational, not a threat by itself</td></tr><tr><td>User Agent Fuzzer</td><td>noise</td><td>informational, not a threat by itself</td></tr></tbody></table></div>
+</main>
+</body>
+</html>

@@ -1,0 +1,1585 @@
+{
+	"@programName": "ZAP",
+	"@version": "2.17.0",
+	"@generated": "Mon, 9 Nov 2026 14:53:58",
+	"created": "2026-11-09T14:53:58.526207192Z",
+	"insights":[
+		{
+			"level": "Info",
+			"reason": "Informational",
+			"site": "http://www.pimex.pl",
+			"key": "insight.code.3xx",
+			"description": "Percentage of responses with status code 3xx",
+			"statistic": "100"
+		},
+		{
+			"level": "Info",
+			"reason": "Informational",
+			"site": "http://www.pimex.pl",
+			"key": "insight.endpoint.ctype.text/html",
+			"description": "Percentage of endpoints with content type text/html",
+			"statistic": "100"
+		},
+		{
+			"level": "Info",
+			"reason": "Informational",
+			"site": "http://www.pimex.pl",
+			"key": "insight.endpoint.method.GET",
+			"description": "Percentage of endpoints with method GET",
+			"statistic": "100"
+		},
+		{
+			"level": "Info",
+			"reason": "Informational",
+			"site": "http://www.pimex.pl",
+			"key": "insight.endpoint.total",
+			"description": "Count of total endpoints",
+			"statistic": "1"
+		},
+		{
+			"level": "Info",
+			"reason": "Informational",
+			"site": "https://pimex.pl",
+			"key": "insight.code.3xx",
+			"description": "Percentage of responses with status code 3xx",
+			"statistic": "85"
+		},
+		{
+			"level": "Info",
+			"reason": "Informational",
+			"site": "https://pimex.pl",
+			"key": "insight.code.4xx",
+			"description": "Percentage of responses with status code 4xx",
+			"statistic": "14"
+		},
+		{
+			"level": "Info",
+			"reason": "Informational",
+			"site": "https://pimex.pl",
+			"key": "insight.endpoint.ctype.text/html",
+			"description": "Percentage of endpoints with content type text/html",
+			"statistic": "100"
+		},
+		{
+			"level": "Info",
+			"reason": "Informational",
+			"site": "https://pimex.pl",
+			"key": "insight.endpoint.method.GET",
+			"description": "Percentage of endpoints with method GET",
+			"statistic": "100"
+		},
+		{
+			"level": "Info",
+			"reason": "Informational",
+			"site": "https://pimex.pl",
+			"key": "insight.endpoint.total",
+			"description": "Count of total endpoints",
+			"statistic": "4"
+		},
+		{
+			"level": "Info",
+			"reason": "Informational",
+			"site": "https://pimex.pl",
+			"key": "insight.response.slow",
+			"description": "Percentage of slow responses",
+			"statistic": "28"
+		},
+		{
+			"level": "Info",
+			"reason": "Informational",
+			"site": "https://www.pimex.pl",
+			"key": "insight.code.2xx",
+			"description": "Percentage of responses with status code 2xx",
+			"statistic": "93"
+		},
+		{
+			"level": "Info",
+			"reason": "Informational",
+			"site": "https://www.pimex.pl",
+			"key": "insight.code.3xx",
+			"description": "Percentage of responses with status code 3xx",
+			"statistic": "6"
+		},
+		{
+			"level": "Info",
+			"reason": "Informational",
+			"site": "https://www.pimex.pl",
+			"key": "insight.endpoint.ctype.text/html",
+			"description": "Percentage of endpoints with content type text/html",
+			"statistic": "100"
+		},
+		{
+			"level": "Info",
+			"reason": "Informational",
+			"site": "https://www.pimex.pl",
+			"key": "insight.endpoint.method.GET",
+			"description": "Percentage of endpoints with method GET",
+			"statistic": "100"
+		},
+		{
+			"level": "Info",
+			"reason": "Informational",
+			"site": "https://www.pimex.pl",
+			"key": "insight.endpoint.total",
+			"description": "Count of total endpoints",
+			"statistic": "63"
+		},
+		{
+			"level": "Info",
+			"reason": "Informational",
+			"site": "https://www.pimex.pl",
+			"key": "insight.response.slow",
+			"description": "Percentage of slow responses",
+			"statistic": "10"
+		}
+	],
+	"site":[ 
+		{
+			"@name": "https://www.pimex.pl",
+			"@host": "www.pimex.pl",
+			"@port": "443",
+			"@ssl": "true",
+			"alerts": [ 
+				{
+					"pluginid": "20020",
+					"alertRef": "20020-1",
+					"alert": "PHP Version with Known Vulnerabilities",
+					"name": "PHP Version with Known Vulnerabilities",
+					"riskcode": "3",
+					"confidence": "1",
+					"riskdesc": "High (Low)",
+					"desc": "<p>The server disclosed the version of a server side technology it is running via an HTTP response header, and that version is affected by known vulnerabilities. The version, header and vulnerabilities, listed by severity, are given in the other info. See the references for the details of each.</p><p>Note that some distributions backport security fixes without changing the version number, so check whether the fixes have actually been applied before reporting these as confirmed.</p>",
+					"instances":[ 
+						{
+							"id": "251",
+							"uri": "https://www.pimex.pl/lamele-elewacyjne-zewnetrzne-nowoczesne-rozwiazanie-na-fasade-budynku/",
+							"nodeName": "https:\/\/www.pimex.pl\/lamele-elewacyjne-zewnetrzne-nowoczesne-rozwiazanie-na-fasade-budynku\/",
+							"method": "GET",
+							"param": "",
+							"attack": "",
+							"evidence": "PHP/8.2.35",
+							"otherinfo": "The server disclosed that it is running PHP version 8.2.35 via the \"X-Powered-By\" HTTP response header.\n\n6 known vulnerabilities: 0 critical, 4 high, 2 medium, 0 low.\n\nThe version disclosed is older than any version listed in the advisories, so it is assumed to be affected because older, end-of-life release branches rarely receive fixes.\n\nHigh: CVE-2024-2757, CVE-2026-12184, CVE-2026-17544, CVE-2026-7263\n\nMedium: CVE-2024-11235, CVE-2026-6104"
+						}
+					],
+					"count": "1",
+					"systemic": false,
+					"solution": "<p>Upgrade PHP to a supported version which includes fixes for the listed vulnerabilities. Also configure the server not to disclose the PHP version, e.g. by setting \"expose_php = Off\" in php.ini and suppressing version details in the \"Server\" header.</p>",
+					"otherinfo": "<p>The server disclosed that it is running PHP version 8.2.35 via the \"X-Powered-By\" HTTP response header.</p><p></p><p>6 known vulnerabilities: 0 critical, 4 high, 2 medium, 0 low.</p><p></p><p>The version disclosed is older than any version listed in the advisories, so it is assumed to be affected because older, end-of-life release branches rarely receive fixes.</p><p></p><p>High: CVE-2024-2757, CVE-2026-12184, CVE-2026-17544, CVE-2026-7263</p><p></p><p>Medium: CVE-2024-11235, CVE-2026-6104</p>",
+					"reference": "<p>https://www.php.net/supported-versions.php</p><p>https://github.com/php/php-src/security/advisories</p><p>https://www.zaproxy.org/docs/desktop/addons/passive-scan-rules/php-known-vulnerabilities/#cve-2024-2757</p><p>https://www.zaproxy.org/docs/desktop/addons/passive-scan-rules/php-known-vulnerabilities/#cve-2026-12184</p><p>https://www.zaproxy.org/docs/desktop/addons/passive-scan-rules/php-known-vulnerabilities/#cve-2026-17544</p><p>https://www.zaproxy.org/docs/desktop/addons/passive-scan-rules/php-known-vulnerabilities/#cve-2026-7263</p><p>https://www.zaproxy.org/docs/desktop/addons/passive-scan-rules/php-known-vulnerabilities/#cve-2024-11235</p><p>https://www.zaproxy.org/docs/desktop/addons/passive-scan-rules/php-known-vulnerabilities/#cve-2026-6104</p>",
+					"cweid": "1395",
+					"wascid": "13",
+					"sourceid": "38"
+				},
+				{
+					"pluginid": "10202",
+					"alertRef": "10202",
+					"alert": "Absence of Anti-CSRF Tokens",
+					"name": "Absence of Anti-CSRF Tokens",
+					"riskcode": "2",
+					"confidence": "1",
+					"riskdesc": "Medium (Low)",
+					"desc": "<p>No Anti-CSRF tokens were found in a HTML submission form.</p><p>A cross-site request forgery is an attack that involves forcing a victim to send an HTTP request to a target destination without their knowledge or intent in order to perform an action as the victim. The underlying cause is application functionality using predictable URL/form actions in a repeatable way. The nature of the attack is that CSRF exploits the trust that a web site has for a user. By contrast, cross-site scripting (XSS) exploits the trust that a user has for a web site. Like XSS, CSRF attacks are not necessarily cross-site, but they can be. Cross-site request forgery is also known as CSRF, XSRF, one-click attack, session riding, confused deputy, and sea surf.</p><p></p><p>CSRF attacks are effective in a number of situations, including:</p><p>    * The victim has an active session on the target site.</p><p>    * The victim is authenticated via HTTP auth on the target site.</p><p>    * The victim is on the same local network as the target site.</p><p></p><p>CSRF has primarily been used to perform an action against a target site using the victim's privileges, but recent techniques have been discovered to disclose information by gaining access to the response. The risk of information disclosure is dramatically increased when the target site is vulnerable to XSS, because XSS can be used as a platform for CSRF, allowing the attack to operate within the bounds of the same-origin policy.</p>",
+					"instances":[ 
+						{
+							"id": "64",
+							"uri": "https://www.pimex.pl/blaty/",
+							"nodeName": "https:\/\/www.pimex.pl\/blaty\/",
+							"method": "GET",
+							"param": "",
+							"attack": "",
+							"evidence": "<form id=\"customer_login\" method=\"post\" class=\"login woocommerce-form woocommerce-form-login hidden-form\" action=\"https://www.pimex.pl/moje-konto/\" style=\"display:none;\">",
+							"otherinfo": "No known Anti-CSRF token [anticsrf, CSRFToken, __RequestVerificationToken, csrfmiddlewaretoken, authenticity_token, OWASP_CSRFTOKEN, anoncsrf, csrf_token, _csrf, _csrfSecret, __csrf_magic, CSRF, _token, _csrf_token, _csrfToken] was found in the following HTML form: [Form 3: \"_wp_http_referer\" \"password\" \"redirect\" \"rememberme\" \"username\" \"woocommerce-login-nonce\" ]."
+						},
+						{
+							"id": "54",
+							"uri": "https://www.pimex.pl/czym-ciac-deski-kompozytowe/",
+							"nodeName": "https:\/\/www.pimex.pl\/czym-ciac-deski-kompozytowe\/",
+							"method": "GET",
+							"param": "",
+							"attack": "",
+							"evidence": "<form id=\"customer_login\" method=\"post\" class=\"login woocommerce-form woocommerce-form-login hidden-form\" action=\"https://www.pimex.pl/moje-konto/\" style=\"display:none;\">",
+							"otherinfo": "No known Anti-CSRF token [anticsrf, CSRFToken, __RequestVerificationToken, csrfmiddlewaretoken, authenticity_token, OWASP_CSRFTOKEN, anoncsrf, csrf_token, _csrf, _csrfSecret, __csrf_magic, CSRF, _token, _csrf_token, _csrfToken] was found in the following HTML form: [Form 3: \"_wp_http_referer\" \"password\" \"redirect\" \"rememberme\" \"username\" \"woocommerce-login-nonce\" ]."
+						},
+						{
+							"id": "61",
+							"uri": "https://www.pimex.pl/jakie-legary-pod-taras/",
+							"nodeName": "https:\/\/www.pimex.pl\/jakie-legary-pod-taras\/",
+							"method": "GET",
+							"param": "",
+							"attack": "",
+							"evidence": "<form id=\"customer_login\" method=\"post\" class=\"login woocommerce-form woocommerce-form-login hidden-form\" action=\"https://www.pimex.pl/moje-konto/\" style=\"display:none;\">",
+							"otherinfo": "No known Anti-CSRF token [anticsrf, CSRFToken, __RequestVerificationToken, csrfmiddlewaretoken, authenticity_token, OWASP_CSRFTOKEN, anoncsrf, csrf_token, _csrf, _csrfSecret, __csrf_magic, CSRF, _token, _csrf_token, _csrfToken] was found in the following HTML form: [Form 3: \"_wp_http_referer\" \"password\" \"redirect\" \"rememberme\" \"username\" \"woocommerce-login-nonce\" ]."
+						},
+						{
+							"id": "55",
+							"uri": "https://www.pimex.pl/jakie-szczeliny-miedzy-deskami-tarasowymi/",
+							"nodeName": "https:\/\/www.pimex.pl\/jakie-szczeliny-miedzy-deskami-tarasowymi\/",
+							"method": "GET",
+							"param": "",
+							"attack": "",
+							"evidence": "<form id=\"customer_login\" method=\"post\" class=\"login woocommerce-form woocommerce-form-login hidden-form\" action=\"https://www.pimex.pl/moje-konto/\" style=\"display:none;\">",
+							"otherinfo": "No known Anti-CSRF token [anticsrf, CSRFToken, __RequestVerificationToken, csrfmiddlewaretoken, authenticity_token, OWASP_CSRFTOKEN, anoncsrf, csrf_token, _csrf, _csrfSecret, __csrf_magic, CSRF, _token, _csrf_token, _csrfToken] was found in the following HTML form: [Form 3: \"_wp_http_referer\" \"password\" \"redirect\" \"rememberme\" \"username\" \"woocommerce-login-nonce\" ]."
+						},
+						{
+							"id": "49",
+							"uri": "https://www.pimex.pl/pozostale/",
+							"nodeName": "https:\/\/www.pimex.pl\/pozostale\/",
+							"method": "GET",
+							"param": "",
+							"attack": "",
+							"evidence": "<form id=\"customer_login\" method=\"post\" class=\"login woocommerce-form woocommerce-form-login hidden-form\" action=\"https://www.pimex.pl/moje-konto/\" style=\"display:none;\">",
+							"otherinfo": "No known Anti-CSRF token [anticsrf, CSRFToken, __RequestVerificationToken, csrfmiddlewaretoken, authenticity_token, OWASP_CSRFTOKEN, anoncsrf, csrf_token, _csrf, _csrfSecret, __csrf_magic, CSRF, _token, _csrf_token, _csrfToken] was found in the following HTML form: [Form 3: \"_wp_http_referer\" \"password\" \"redirect\" \"rememberme\" \"username\" \"woocommerce-login-nonce\" ]."
+						}
+					],
+					"count": "5",
+					"systemic": true,
+					"solution": "<p>Phase: Architecture and Design</p><p>Use a vetted library or framework that does not allow this weakness to occur or provides constructs that make this weakness easier to avoid.</p><p>For example, use anti-CSRF packages such as the OWASP CSRFGuard.</p><p></p><p>Phase: Implementation</p><p>Ensure that your application is free of cross-site scripting issues, because most CSRF defenses can be bypassed using attacker-controlled script.</p><p></p><p>Phase: Architecture and Design</p><p>Generate a unique nonce for each form, place the nonce into the form, and verify the nonce upon receipt of the form. Be sure that the nonce is not predictable (CWE-330).</p><p>Note that this can be bypassed using XSS.</p><p></p><p>Identify especially dangerous operations. When the user performs a dangerous operation, send a separate confirmation request to ensure that the user intended to perform that operation.</p><p>Note that this can be bypassed using XSS.</p><p></p><p>Use the ESAPI Session Management control.</p><p>This control includes a component for CSRF.</p><p></p><p>Do not use the GET method for any request that triggers a state change.</p><p></p><p>Phase: Implementation</p><p>Check the HTTP Referer header to see if the request originated from an expected page. This could break legitimate functionality, because users or proxies may have disabled sending the Referer for privacy reasons.</p>",
+					"otherinfo": "<p>No known Anti-CSRF token [anticsrf, CSRFToken, __RequestVerificationToken, csrfmiddlewaretoken, authenticity_token, OWASP_CSRFTOKEN, anoncsrf, csrf_token, _csrf, _csrfSecret, __csrf_magic, CSRF, _token, _csrf_token, _csrfToken] was found in the following HTML form: [Form 3: \"_wp_http_referer\" \"password\" \"redirect\" \"rememberme\" \"username\" \"woocommerce-login-nonce\" ].</p>",
+					"reference": "<p>https://cheatsheetseries.owasp.org/cheatsheets/Cross-Site_Request_Forgery_Prevention_Cheat_Sheet.html</p><p>https://cwe.mitre.org/data/definitions/352.html</p>",
+					"cweid": "352",
+					"wascid": "9",
+					"sourceid": "20"
+				},
+				{
+					"pluginid": "10038",
+					"alertRef": "10038-1",
+					"alert": "Content Security Policy (CSP) Header Not Set",
+					"name": "Content Security Policy (CSP) Header Not Set",
+					"riskcode": "2",
+					"confidence": "3",
+					"riskdesc": "Medium (High)",
+					"desc": "<p>Content Security Policy (CSP) is an added layer of security that helps to detect and mitigate certain types of attacks, including Cross Site Scripting (XSS) and data injection attacks. These attacks are used for everything from data theft to site defacement or distribution of malware. CSP provides a set of standard HTTP headers that allow website owners to declare approved sources of content that browsers should be allowed to load on that page \u2014 covered types are JavaScript, CSS, HTML frames, fonts, images and embeddable objects such as Java applets, ActiveX, audio and video files.</p>",
+					"instances":[ 
+						{
+							"id": "32",
+							"uri": "https://www.pimex.pl/blaty/",
+							"nodeName": "https:\/\/www.pimex.pl\/blaty\/",
+							"method": "GET",
+							"param": "",
+							"attack": "",
+							"evidence": "",
+							"otherinfo": ""
+						},
+						{
+							"id": "31",
+							"uri": "https://www.pimex.pl/czym-ciac-deski-kompozytowe/",
+							"nodeName": "https:\/\/www.pimex.pl\/czym-ciac-deski-kompozytowe\/",
+							"method": "GET",
+							"param": "",
+							"attack": "",
+							"evidence": "",
+							"otherinfo": ""
+						},
+						{
+							"id": "26",
+							"uri": "https://www.pimex.pl/deski-tarasowe-wzdluz-czy-wszerz/",
+							"nodeName": "https:\/\/www.pimex.pl\/deski-tarasowe-wzdluz-czy-wszerz\/",
+							"method": "GET",
+							"param": "",
+							"attack": "",
+							"evidence": "",
+							"otherinfo": ""
+						},
+						{
+							"id": "33",
+							"uri": "https://www.pimex.pl/drzwi-drewniane/",
+							"nodeName": "https:\/\/www.pimex.pl\/drzwi-drewniane\/",
+							"method": "GET",
+							"param": "",
+							"attack": "",
+							"evidence": "",
+							"otherinfo": ""
+						},
+						{
+							"id": "16",
+							"uri": "https://www.pimex.pl/pozostale/",
+							"nodeName": "https:\/\/www.pimex.pl\/pozostale\/",
+							"method": "GET",
+							"param": "",
+							"attack": "",
+							"evidence": "",
+							"otherinfo": ""
+						}
+					],
+					"count": "5",
+					"systemic": true,
+					"solution": "<p>Ensure that your web server, application server, load balancer, etc. is configured to set the Content-Security-Policy header.</p>",
+					"otherinfo": "",
+					"reference": "<p>https://developer.mozilla.org/en-US/docs/Web/HTTP/Guides/CSP</p><p>https://cheatsheetseries.owasp.org/cheatsheets/Content_Security_Policy_Cheat_Sheet.html</p><p>https://www.w3.org/TR/CSP/</p><p>https://w3c.github.io/webappsec-csp/</p><p>https://web.dev/articles/csp</p><p>https://caniuse.com/#feat=contentsecuritypolicy</p><p>https://content-security-policy.com/</p>",
+					"cweid": "693",
+					"wascid": "15",
+					"sourceid": "20"
+				},
+				{
+					"pluginid": "10020",
+					"alertRef": "10020-1",
+					"alert": "Missing Anti-clickjacking Header",
+					"name": "Missing Anti-clickjacking Header",
+					"riskcode": "2",
+					"confidence": "2",
+					"riskdesc": "Medium (Medium)",
+					"desc": "<p>The response does not protect against 'ClickJacking' attacks. It should include either Content-Security-Policy with 'frame-ancestors' directive or X-Frame-Options.</p>",
+					"instances":[ 
+						{
+							"id": "4",
+							"uri": "https://www.pimex.pl/co-miedzy-legarami-a-deskami-tarasowymi/",
+							"nodeName": "https:\/\/www.pimex.pl\/co-miedzy-legarami-a-deskami-tarasowymi\/",
+							"method": "GET",
+							"param": "x-frame-options",
+							"attack": "",
+							"evidence": "",
+							"otherinfo": ""
+						},
+						{
+							"id": "5",
+							"uri": "https://www.pimex.pl/jakie-legary-pod-taras/",
+							"nodeName": "https:\/\/www.pimex.pl\/jakie-legary-pod-taras\/",
+							"method": "GET",
+							"param": "x-frame-options",
+							"attack": "",
+							"evidence": "",
+							"otherinfo": ""
+						},
+						{
+							"id": "6",
+							"uri": "https://www.pimex.pl/jakie-szczeliny-miedzy-deskami-tarasowymi/",
+							"nodeName": "https:\/\/www.pimex.pl\/jakie-szczeliny-miedzy-deskami-tarasowymi\/",
+							"method": "GET",
+							"param": "x-frame-options",
+							"attack": "",
+							"evidence": "",
+							"otherinfo": ""
+						},
+						{
+							"id": "3",
+							"uri": "https://www.pimex.pl/pozostale/",
+							"nodeName": "https:\/\/www.pimex.pl\/pozostale\/",
+							"method": "GET",
+							"param": "x-frame-options",
+							"attack": "",
+							"evidence": "",
+							"otherinfo": ""
+						},
+						{
+							"id": "7",
+							"uri": "https://www.pimex.pl/uslugi-montaz/",
+							"nodeName": "https:\/\/www.pimex.pl\/uslugi-montaz\/",
+							"method": "GET",
+							"param": "x-frame-options",
+							"attack": "",
+							"evidence": "",
+							"otherinfo": ""
+						}
+					],
+					"count": "5",
+					"systemic": true,
+					"solution": "<p>Modern Web browsers support the Content-Security-Policy and X-Frame-Options HTTP headers. Ensure one of them is set on all web pages returned by your site/app.</p><p>If you expect the page to be framed only by pages on your server (e.g. it's part of a FRAMESET) then you'll want to use SAMEORIGIN, otherwise if you never expect the page to be framed, you should use DENY. Alternatively consider implementing Content Security Policy's \"frame-ancestors\" directive.</p>",
+					"otherinfo": "",
+					"reference": "<p>https://developer.mozilla.org/en-US/docs/Web/HTTP/Reference/Headers/X-Frame-Options</p>",
+					"cweid": "1021",
+					"wascid": "15",
+					"sourceid": "14"
+				},
+				{
+					"pluginid": "90003",
+					"alertRef": "90003",
+					"alert": "Sub Resource Integrity Attribute Missing",
+					"name": "Sub Resource Integrity Attribute Missing",
+					"riskcode": "2",
+					"confidence": "3",
+					"riskdesc": "Medium (High)",
+					"desc": "<p>The integrity attribute is missing on a script or link tag served by an external server. The integrity tag prevents an attacker who have gained access to this server from injecting a malicious content.</p>",
+					"instances":[ 
+						{
+							"id": "90",
+							"uri": "https://www.pimex.pl/co-miedzy-legarami-a-deskami-tarasowymi/",
+							"nodeName": "https:\/\/www.pimex.pl\/co-miedzy-legarami-a-deskami-tarasowymi\/",
+							"method": "GET",
+							"param": "",
+							"attack": "",
+							"evidence": "<link rel='stylesheet' id='xts-google-fonts-css' href='https://fonts.googleapis.com/css?family=Lato:400,700%7CPoppins:400,600,500&#038;ver=8.3.9' media='all' />",
+							"otherinfo": ""
+						},
+						{
+							"id": "91",
+							"uri": "https://www.pimex.pl/co-miedzy-legarami-a-deskami-tarasowymi/",
+							"nodeName": "https:\/\/www.pimex.pl\/co-miedzy-legarami-a-deskami-tarasowymi\/",
+							"method": "GET",
+							"param": "",
+							"attack": "",
+							"evidence": "<script async src=\"https://www.googletagmanager.com/gtag/js?id=G-VCQT1CP85R&l=dataLayerPYS\"></script>",
+							"otherinfo": ""
+						},
+						{
+							"id": "92",
+							"uri": "https://www.pimex.pl/co-miedzy-legarami-a-deskami-tarasowymi/",
+							"nodeName": "https:\/\/www.pimex.pl\/co-miedzy-legarami-a-deskami-tarasowymi\/",
+							"method": "GET",
+							"param": "",
+							"attack": "",
+							"evidence": "<script id=\"google-recaptcha-js\" src=\"https://www.google.com/recaptcha/api.js?render=6Ld2pXUnAAAAAGyOJnBIwEeOg-Nv4iIie97qIJ4U&#038;ver=3.0\"></script>",
+							"otherinfo": ""
+						},
+						{
+							"id": "97",
+							"uri": "https://www.pimex.pl/czym-ciac-deski-kompozytowe/",
+							"nodeName": "https:\/\/www.pimex.pl\/czym-ciac-deski-kompozytowe\/",
+							"method": "GET",
+							"param": "",
+							"attack": "",
+							"evidence": "<link rel='stylesheet' id='xts-google-fonts-css' href='https://fonts.googleapis.com/css?family=Lato:400,700%7CPoppins:400,600,500&#038;ver=8.3.9' media='all' />",
+							"otherinfo": ""
+						},
+						{
+							"id": "100",
+							"uri": "https://www.pimex.pl/jakie-szczeliny-miedzy-deskami-tarasowymi/",
+							"nodeName": "https:\/\/www.pimex.pl\/jakie-szczeliny-miedzy-deskami-tarasowymi\/",
+							"method": "GET",
+							"param": "",
+							"attack": "",
+							"evidence": "<link rel='stylesheet' id='xts-google-fonts-css' href='https://fonts.googleapis.com/css?family=Lato:400,700%7CPoppins:400,600,500&#038;ver=8.3.9' media='all' />",
+							"otherinfo": ""
+						}
+					],
+					"count": "5",
+					"systemic": true,
+					"solution": "<p>Provide a valid integrity attribute to the tag.</p>",
+					"otherinfo": "",
+					"reference": "<p>https://developer.mozilla.org/en-US/docs/Web/Security/Defenses/Subresource_Integrity</p>",
+					"cweid": "345",
+					"wascid": "15",
+					"sourceid": "14"
+				},
+				{
+					"pluginid": "10017",
+					"alertRef": "10017",
+					"alert": "Cross-Domain JavaScript Source File Inclusion",
+					"name": "Cross-Domain JavaScript Source File Inclusion",
+					"riskcode": "1",
+					"confidence": "2",
+					"riskdesc": "Low (Medium)",
+					"desc": "<p>The page includes one or more script files from a third-party domain.</p>",
+					"instances":[ 
+						{
+							"id": "38",
+							"uri": "https://www.pimex.pl/czym-ciac-deski-kompozytowe/",
+							"nodeName": "https:\/\/www.pimex.pl\/czym-ciac-deski-kompozytowe\/",
+							"method": "GET",
+							"param": "https://www.google.com/recaptcha/api.js?render=6Ld2pXUnAAAAAGyOJnBIwEeOg-Nv4iIie97qIJ4U&ver=3.0",
+							"attack": "",
+							"evidence": "<script id=\"google-recaptcha-js\" src=\"https://www.google.com/recaptcha/api.js?render=6Ld2pXUnAAAAAGyOJnBIwEeOg-Nv4iIie97qIJ4U&#038;ver=3.0\"></script>",
+							"otherinfo": ""
+						},
+						{
+							"id": "36",
+							"uri": "https://www.pimex.pl/czym-ciac-deski-kompozytowe/",
+							"nodeName": "https:\/\/www.pimex.pl\/czym-ciac-deski-kompozytowe\/",
+							"method": "GET",
+							"param": "https://www.googletagmanager.com/gtag/js?id=G-VCQT1CP85R&l=dataLayerPYS",
+							"attack": "",
+							"evidence": "<script async src=\"https://www.googletagmanager.com/gtag/js?id=G-VCQT1CP85R&l=dataLayerPYS\"></script>",
+							"otherinfo": ""
+						},
+						{
+							"id": "37",
+							"uri": "https://www.pimex.pl/jakie-szczeliny-miedzy-deskami-tarasowymi/",
+							"nodeName": "https:\/\/www.pimex.pl\/jakie-szczeliny-miedzy-deskami-tarasowymi\/",
+							"method": "GET",
+							"param": "https://www.googletagmanager.com/gtag/js?id=G-VCQT1CP85R&l=dataLayerPYS",
+							"attack": "",
+							"evidence": "<script async src=\"https://www.googletagmanager.com/gtag/js?id=G-VCQT1CP85R&l=dataLayerPYS\"></script>",
+							"otherinfo": ""
+						},
+						{
+							"id": "22",
+							"uri": "https://www.pimex.pl/pozostale/",
+							"nodeName": "https:\/\/www.pimex.pl\/pozostale\/",
+							"method": "GET",
+							"param": "https://www.google.com/recaptcha/api.js?render=6Ld2pXUnAAAAAGyOJnBIwEeOg-Nv4iIie97qIJ4U&ver=3.0",
+							"attack": "",
+							"evidence": "<script id=\"google-recaptcha-js\" src=\"https://www.google.com/recaptcha/api.js?render=6Ld2pXUnAAAAAGyOJnBIwEeOg-Nv4iIie97qIJ4U&#038;ver=3.0\"></script>",
+							"otherinfo": ""
+						},
+						{
+							"id": "21",
+							"uri": "https://www.pimex.pl/pozostale/",
+							"nodeName": "https:\/\/www.pimex.pl\/pozostale\/",
+							"method": "GET",
+							"param": "https://www.googletagmanager.com/gtag/js?id=G-VCQT1CP85R&l=dataLayerPYS",
+							"attack": "",
+							"evidence": "<script async src=\"https://www.googletagmanager.com/gtag/js?id=G-VCQT1CP85R&l=dataLayerPYS\"></script>",
+							"otherinfo": ""
+						}
+					],
+					"count": "5",
+					"systemic": true,
+					"solution": "<p>Ensure JavaScript source files are loaded from only trusted sources, and the sources can't be controlled by end users of the application.</p>",
+					"otherinfo": "",
+					"reference": "",
+					"cweid": "829",
+					"wascid": "15",
+					"sourceid": "24"
+				},
+				{
+					"pluginid": "90004",
+					"alertRef": "90004-2",
+					"alert": "Cross-Origin-Embedder-Policy Header Missing or Invalid",
+					"name": "Cross-Origin-Embedder-Policy Header Missing or Invalid",
+					"riskcode": "1",
+					"confidence": "2",
+					"riskdesc": "Low (Medium)",
+					"desc": "<p>Cross-Origin-Embedder-Policy header is a response header that prevents a document from loading any cross-origin resources that don't explicitly grant the document permission (using CORP or CORS).</p>",
+					"instances":[ 
+						{
+							"id": "190",
+							"uri": "https://www.pimex.pl/co-miedzy-legarami-a-deskami-tarasowymi/",
+							"nodeName": "https:\/\/www.pimex.pl\/co-miedzy-legarami-a-deskami-tarasowymi\/",
+							"method": "GET",
+							"param": "Cross-Origin-Embedder-Policy",
+							"attack": "",
+							"evidence": "",
+							"otherinfo": ""
+						},
+						{
+							"id": "221",
+							"uri": "https://www.pimex.pl/jakie-legary-pod-taras/",
+							"nodeName": "https:\/\/www.pimex.pl\/jakie-legary-pod-taras\/",
+							"method": "GET",
+							"param": "Cross-Origin-Embedder-Policy",
+							"attack": "",
+							"evidence": "",
+							"otherinfo": ""
+						},
+						{
+							"id": "207",
+							"uri": "https://www.pimex.pl/jakie-szczeliny-miedzy-deskami-tarasowymi/",
+							"nodeName": "https:\/\/www.pimex.pl\/jakie-szczeliny-miedzy-deskami-tarasowymi\/",
+							"method": "GET",
+							"param": "Cross-Origin-Embedder-Policy",
+							"attack": "",
+							"evidence": "",
+							"otherinfo": ""
+						},
+						{
+							"id": "213",
+							"uri": "https://www.pimex.pl/pozostale/",
+							"nodeName": "https:\/\/www.pimex.pl\/pozostale\/",
+							"method": "GET",
+							"param": "Cross-Origin-Embedder-Policy",
+							"attack": "",
+							"evidence": "",
+							"otherinfo": ""
+						},
+						{
+							"id": "218",
+							"uri": "https://www.pimex.pl/uslugi-montaz/",
+							"nodeName": "https:\/\/www.pimex.pl\/uslugi-montaz\/",
+							"method": "GET",
+							"param": "Cross-Origin-Embedder-Policy",
+							"attack": "",
+							"evidence": "",
+							"otherinfo": ""
+						}
+					],
+					"count": "5",
+					"systemic": true,
+					"solution": "<p>Ensure that the application/web server sets the Cross-Origin-Embedder-Policy header appropriately, and that it sets the Cross-Origin-Embedder-Policy header to 'require-corp' for documents.</p><p>If possible, ensure that the end user uses a standards-compliant and modern web browser that supports the Cross-Origin-Embedder-Policy header (https://caniuse.com/mdn-http_headers_cross-origin-embedder-policy).</p>",
+					"otherinfo": "",
+					"reference": "<p>https://developer.mozilla.org/en-US/docs/Web/HTTP/Reference/Headers/Cross-Origin-Embedder-Policy</p>",
+					"cweid": "693",
+					"wascid": "14",
+					"sourceid": "14"
+				},
+				{
+					"pluginid": "90004",
+					"alertRef": "90004-3",
+					"alert": "Cross-Origin-Opener-Policy Header Missing or Invalid",
+					"name": "Cross-Origin-Opener-Policy Header Missing or Invalid",
+					"riskcode": "1",
+					"confidence": "2",
+					"riskdesc": "Low (Medium)",
+					"desc": "<p>Cross-Origin-Opener-Policy header is a response header that allows a site to control if others included documents share the same browsing context. Sharing the same browsing context with untrusted documents might lead to data leak.</p>",
+					"instances":[ 
+						{
+							"id": "198",
+							"uri": "https://www.pimex.pl/co-miedzy-legarami-a-deskami-tarasowymi/",
+							"nodeName": "https:\/\/www.pimex.pl\/co-miedzy-legarami-a-deskami-tarasowymi\/",
+							"method": "GET",
+							"param": "Cross-Origin-Opener-Policy",
+							"attack": "",
+							"evidence": "",
+							"otherinfo": ""
+						},
+						{
+							"id": "232",
+							"uri": "https://www.pimex.pl/czym-ciac-deski-kompozytowe/",
+							"nodeName": "https:\/\/www.pimex.pl\/czym-ciac-deski-kompozytowe\/",
+							"method": "GET",
+							"param": "Cross-Origin-Opener-Policy",
+							"attack": "",
+							"evidence": "",
+							"otherinfo": ""
+						},
+						{
+							"id": "223",
+							"uri": "https://www.pimex.pl/jakie-legary-pod-taras/",
+							"nodeName": "https:\/\/www.pimex.pl\/jakie-legary-pod-taras\/",
+							"method": "GET",
+							"param": "Cross-Origin-Opener-Policy",
+							"attack": "",
+							"evidence": "",
+							"otherinfo": ""
+						},
+						{
+							"id": "236",
+							"uri": "https://www.pimex.pl/ogrodzenia-drewniane/",
+							"nodeName": "https:\/\/www.pimex.pl\/ogrodzenia-drewniane\/",
+							"method": "GET",
+							"param": "Cross-Origin-Opener-Policy",
+							"attack": "",
+							"evidence": "",
+							"otherinfo": ""
+						},
+						{
+							"id": "219",
+							"uri": "https://www.pimex.pl/uslugi-montaz/",
+							"nodeName": "https:\/\/www.pimex.pl\/uslugi-montaz\/",
+							"method": "GET",
+							"param": "Cross-Origin-Opener-Policy",
+							"attack": "",
+							"evidence": "",
+							"otherinfo": ""
+						}
+					],
+					"count": "5",
+					"systemic": true,
+					"solution": "<p>Ensure that the application/web server sets the Cross-Origin-Opener-Policy header appropriately, and that it sets the Cross-Origin-Opener-Policy header to 'same-origin' for documents.</p><p>'same-origin-allow-popups' is considered as less secured and should be avoided.</p><p>If possible, ensure that the end user uses a standards-compliant and modern web browser that supports the Cross-Origin-Opener-Policy header (https://caniuse.com/mdn-http_headers_cross-origin-opener-policy).</p>",
+					"otherinfo": "",
+					"reference": "<p>https://developer.mozilla.org/en-US/docs/Web/HTTP/Reference/Headers/Cross-Origin-Opener-Policy</p>",
+					"cweid": "693",
+					"wascid": "14",
+					"sourceid": "14"
+				},
+				{
+					"pluginid": "90004",
+					"alertRef": "90004-1",
+					"alert": "Cross-Origin-Resource-Policy Header Missing or Invalid",
+					"name": "Cross-Origin-Resource-Policy Header Missing or Invalid",
+					"riskcode": "1",
+					"confidence": "2",
+					"riskdesc": "Low (Medium)",
+					"desc": "<p>Cross-Origin-Resource-Policy header is an opt-in header designed to counter side-channels attacks like Spectre. Resource should be specifically set as shareable amongst different origins.</p>",
+					"instances":[ 
+						{
+							"id": "187",
+							"uri": "https://www.pimex.pl/co-miedzy-legarami-a-deskami-tarasowymi/",
+							"nodeName": "https:\/\/www.pimex.pl\/co-miedzy-legarami-a-deskami-tarasowymi\/",
+							"method": "GET",
+							"param": "Cross-Origin-Resource-Policy",
+							"attack": "",
+							"evidence": "",
+							"otherinfo": ""
+						},
+						{
+							"id": "202",
+							"uri": "https://www.pimex.pl/czym-ciac-deski-kompozytowe/",
+							"nodeName": "https:\/\/www.pimex.pl\/czym-ciac-deski-kompozytowe\/",
+							"method": "GET",
+							"param": "Cross-Origin-Resource-Policy",
+							"attack": "",
+							"evidence": "",
+							"otherinfo": ""
+						},
+						{
+							"id": "203",
+							"uri": "https://www.pimex.pl/jakie-szczeliny-miedzy-deskami-tarasowymi/",
+							"nodeName": "https:\/\/www.pimex.pl\/jakie-szczeliny-miedzy-deskami-tarasowymi\/",
+							"method": "GET",
+							"param": "Cross-Origin-Resource-Policy",
+							"attack": "",
+							"evidence": "",
+							"otherinfo": ""
+						},
+						{
+							"id": "211",
+							"uri": "https://www.pimex.pl/pozostale/",
+							"nodeName": "https:\/\/www.pimex.pl\/pozostale\/",
+							"method": "GET",
+							"param": "Cross-Origin-Resource-Policy",
+							"attack": "",
+							"evidence": "",
+							"otherinfo": ""
+						},
+						{
+							"id": "217",
+							"uri": "https://www.pimex.pl/uslugi-montaz/",
+							"nodeName": "https:\/\/www.pimex.pl\/uslugi-montaz\/",
+							"method": "GET",
+							"param": "Cross-Origin-Resource-Policy",
+							"attack": "",
+							"evidence": "",
+							"otherinfo": ""
+						}
+					],
+					"count": "5",
+					"systemic": true,
+					"solution": "<p>Ensure that the application/web server sets the Cross-Origin-Resource-Policy header appropriately, and that it sets the Cross-Origin-Resource-Policy header to 'same-origin' for all web pages.</p><p>'same-site' is considered as less secured and should be avoided.</p><p>If resources must be shared, set the header to 'cross-origin'.</p><p>If possible, ensure that the end user uses a standards-compliant and modern web browser that supports the Cross-Origin-Resource-Policy header (https://caniuse.com/mdn-http_headers_cross-origin-resource-policy).</p>",
+					"otherinfo": "",
+					"reference": "<p>https://developer.mozilla.org/en-US/docs/Web/HTTP/Reference/Headers/Cross-Origin-Embedder-Policy</p>",
+					"cweid": "693",
+					"wascid": "14",
+					"sourceid": "14"
+				},
+				{
+					"pluginid": "10063",
+					"alertRef": "10063-1",
+					"alert": "Permissions Policy Header Not Set",
+					"name": "Permissions Policy Header Not Set",
+					"riskcode": "1",
+					"confidence": "2",
+					"riskdesc": "Low (Medium)",
+					"desc": "<p>Permissions Policy Header is an added layer of security that helps to restrict from unauthorized access or usage of browser/client features by web resources. This policy ensures the user privacy by limiting or specifying the features of the browsers can be used by the web resources. Permissions Policy provides a set of standard HTTP headers that allow website owners to limit which features of browsers can be used by the page such as camera, microphone, location, full screen etc.</p>",
+					"instances":[ 
+						{
+							"id": "178",
+							"uri": "https://www.pimex.pl/co-miedzy-legarami-a-deskami-tarasowymi/",
+							"nodeName": "https:\/\/www.pimex.pl\/co-miedzy-legarami-a-deskami-tarasowymi\/",
+							"method": "GET",
+							"param": "",
+							"attack": "",
+							"evidence": "",
+							"otherinfo": ""
+						},
+						{
+							"id": "200",
+							"uri": "https://www.pimex.pl/czym-ciac-deski-kompozytowe/",
+							"nodeName": "https:\/\/www.pimex.pl\/czym-ciac-deski-kompozytowe\/",
+							"method": "GET",
+							"param": "",
+							"attack": "",
+							"evidence": "",
+							"otherinfo": ""
+						},
+						{
+							"id": "201",
+							"uri": "https://www.pimex.pl/jakie-szczeliny-miedzy-deskami-tarasowymi/",
+							"nodeName": "https:\/\/www.pimex.pl\/jakie-szczeliny-miedzy-deskami-tarasowymi\/",
+							"method": "GET",
+							"param": "",
+							"attack": "",
+							"evidence": "",
+							"otherinfo": ""
+						},
+						{
+							"id": "210",
+							"uri": "https://www.pimex.pl/pozostale/",
+							"nodeName": "https:\/\/www.pimex.pl\/pozostale\/",
+							"method": "GET",
+							"param": "",
+							"attack": "",
+							"evidence": "",
+							"otherinfo": ""
+						},
+						{
+							"id": "204",
+							"uri": "https://www.pimex.pl/uslugi-montaz/",
+							"nodeName": "https:\/\/www.pimex.pl\/uslugi-montaz\/",
+							"method": "GET",
+							"param": "",
+							"attack": "",
+							"evidence": "",
+							"otherinfo": ""
+						}
+					],
+					"count": "5",
+					"systemic": true,
+					"solution": "<p>Ensure that your web server, application server, load balancer, etc. is configured to set the Permissions-Policy header.</p>",
+					"otherinfo": "",
+					"reference": "<p>https://developer.mozilla.org/en-US/docs/Web/HTTP/Reference/Headers/Permissions-Policy</p><p>https://developer.chrome.com/blog/feature-policy/</p><p>https://scotthelme.co.uk/a-new-security-header-feature-policy/</p><p>https://w3c.github.io/webappsec-feature-policy/</p><p>https://www.smashingmagazine.com/2018/12/feature-policy/</p>",
+					"cweid": "693",
+					"wascid": "15",
+					"sourceid": "14"
+				},
+				{
+					"pluginid": "10037",
+					"alertRef": "10037",
+					"alert": "Server Leaks Information via \"X-Powered-By\" HTTP Response Header Field(s)",
+					"name": "Server Leaks Information via \"X-Powered-By\" HTTP Response Header Field(s)",
+					"riskcode": "1",
+					"confidence": "2",
+					"riskdesc": "Low (Medium)",
+					"desc": "<p>The web/application server is leaking information via one or more \"X-Powered-By\" HTTP response headers. Access to such information may facilitate attackers identifying other frameworks/components your web application is reliant upon and the vulnerabilities such components may be subject to.</p>",
+					"instances":[ 
+						{
+							"id": "398",
+							"uri": "https://www.pimex.pl/ile-kosztuja-lamele-elewacyjne-kompletny-poradnik-2025-ceny-porownania-i-oplacalnosc-inwestycji/",
+							"nodeName": "https:\/\/www.pimex.pl\/ile-kosztuja-lamele-elewacyjne-kompletny-poradnik-2025-ceny-porownania-i-oplacalnosc-inwestycji\/",
+							"method": "GET",
+							"param": "",
+							"attack": "",
+							"evidence": "X-Powered-By: PHP/8.2.35",
+							"otherinfo": ""
+						},
+						{
+							"id": "252",
+							"uri": "https://www.pimex.pl/lamele-elewacyjne-zewnetrzne-nowoczesne-rozwiazanie-na-fasade-budynku/",
+							"nodeName": "https:\/\/www.pimex.pl\/lamele-elewacyjne-zewnetrzne-nowoczesne-rozwiazanie-na-fasade-budynku\/",
+							"method": "GET",
+							"param": "",
+							"attack": "",
+							"evidence": "X-Powered-By: PHP/8.2.35",
+							"otherinfo": ""
+						},
+						{
+							"id": "637",
+							"uri": "https://www.pimex.pl/najlepsze-deski-tarasowe-kompozytowe-gdzie-kupic-i-komu-zaufac/",
+							"nodeName": "https:\/\/www.pimex.pl\/najlepsze-deski-tarasowe-kompozytowe-gdzie-kupic-i-komu-zaufac\/",
+							"method": "GET",
+							"param": "",
+							"attack": "",
+							"evidence": "X-Powered-By: PHP/8.2.35",
+							"otherinfo": ""
+						},
+						{
+							"id": "820",
+							"uri": "https://www.pimex.pl/newtechwood-oak-ultrashield-ktory-kolor-wybrac/",
+							"nodeName": "https:\/\/www.pimex.pl\/newtechwood-oak-ultrashield-ktory-kolor-wybrac\/",
+							"method": "GET",
+							"param": "",
+							"attack": "",
+							"evidence": "X-Powered-By: PHP/8.2.35",
+							"otherinfo": ""
+						}
+					],
+					"count": "4",
+					"systemic": false,
+					"solution": "<p>Ensure that your web server, application server, load balancer, etc. is configured to suppress \"X-Powered-By\" headers.</p>",
+					"otherinfo": "",
+					"reference": "<p>https://owasp.org/www-project-web-security-testing-guide/v42/4-Web_Application_Security_Testing/01-Information_Gathering/08-Fingerprint_Web_Application_Framework</p><p>https://www.troyhunt.com/shhh-dont-let-your-response-headers/</p>",
+					"cweid": "497",
+					"wascid": "13",
+					"sourceid": "61"
+				},
+				{
+					"pluginid": "10035",
+					"alertRef": "10035-1",
+					"alert": "Strict-Transport-Security Header Not Set",
+					"name": "Strict-Transport-Security Header Not Set",
+					"riskcode": "1",
+					"confidence": "3",
+					"riskdesc": "Low (High)",
+					"desc": "<p>HTTP Strict Transport Security (HSTS) is a web security policy mechanism whereby a web server declares that complying user agents (such as a web browser) are to interact with it using only secure HTTPS connections (i.e. HTTP layered over TLS/SSL). HSTS is an IETF standards track protocol and is specified in RFC 6797.</p>",
+					"instances":[ 
+						{
+							"id": "93",
+							"uri": "https://www.pimex.pl/",
+							"nodeName": "https:\/\/www.pimex.pl\/",
+							"method": "GET",
+							"param": "",
+							"attack": "",
+							"evidence": "",
+							"otherinfo": ""
+						},
+						{
+							"id": "87",
+							"uri": "https://www.pimex.pl/co-miedzy-legarami-a-deskami-tarasowymi/",
+							"nodeName": "https:\/\/www.pimex.pl\/co-miedzy-legarami-a-deskami-tarasowymi\/",
+							"method": "GET",
+							"param": "",
+							"attack": "",
+							"evidence": "",
+							"otherinfo": ""
+						},
+						{
+							"id": "88",
+							"uri": "https://www.pimex.pl/czym-ciac-deski-kompozytowe/",
+							"nodeName": "https:\/\/www.pimex.pl\/czym-ciac-deski-kompozytowe\/",
+							"method": "GET",
+							"param": "",
+							"attack": "",
+							"evidence": "",
+							"otherinfo": ""
+						},
+						{
+							"id": "94",
+							"uri": "https://www.pimex.pl/deski-tarasowe-wzdluz-czy-wszerz/",
+							"nodeName": "https:\/\/www.pimex.pl\/deski-tarasowe-wzdluz-czy-wszerz\/",
+							"method": "GET",
+							"param": "",
+							"attack": "",
+							"evidence": "",
+							"otherinfo": ""
+						},
+						{
+							"id": "89",
+							"uri": "https://www.pimex.pl/jakie-szczeliny-miedzy-deskami-tarasowymi/",
+							"nodeName": "https:\/\/www.pimex.pl\/jakie-szczeliny-miedzy-deskami-tarasowymi\/",
+							"method": "GET",
+							"param": "",
+							"attack": "",
+							"evidence": "",
+							"otherinfo": ""
+						}
+					],
+					"count": "5",
+					"systemic": true,
+					"solution": "<p>Ensure that your web server, application server, load balancer, etc. is configured to enforce Strict-Transport-Security.</p>",
+					"otherinfo": "",
+					"reference": "<p>https://cheatsheetseries.owasp.org/cheatsheets/HTTP_Strict_Transport_Security_Cheat_Sheet.html</p><p>https://owasp.org/www-community/Security_Headers</p><p>https://en.wikipedia.org/wiki/HTTP_Strict_Transport_Security</p><p>https://caniuse.com/stricttransportsecurity</p><p>https://datatracker.ietf.org/doc/html/rfc6797</p>",
+					"cweid": "319",
+					"wascid": "15",
+					"sourceid": "5"
+				},
+				{
+					"pluginid": "10096",
+					"alertRef": "10096",
+					"alert": "Timestamp Disclosure - Unix",
+					"name": "Timestamp Disclosure - Unix",
+					"riskcode": "1",
+					"confidence": "1",
+					"riskdesc": "Low (Low)",
+					"desc": "<p>A timestamp was disclosed by the application/web server. - Unix</p>",
+					"instances":[ 
+						{
+							"id": "129",
+							"uri": "https://www.pimex.pl/",
+							"nodeName": "https:\/\/www.pimex.pl\/",
+							"method": "GET",
+							"param": "",
+							"attack": "",
+							"evidence": "1794050393",
+							"otherinfo": "1794050393, which evaluates to: 2026-11-07 11:19:53."
+						},
+						{
+							"id": "131",
+							"uri": "https://www.pimex.pl/blaty/",
+							"nodeName": "https:\/\/www.pimex.pl\/blaty\/",
+							"method": "GET",
+							"param": "",
+							"attack": "",
+							"evidence": "1793977980",
+							"otherinfo": "1793977980, which evaluates to: 2026-11-06 15:13:00."
+						},
+						{
+							"id": "110",
+							"uri": "https://www.pimex.pl/co-miedzy-legarami-a-deskami-tarasowymi/",
+							"nodeName": "https:\/\/www.pimex.pl\/co-miedzy-legarami-a-deskami-tarasowymi\/",
+							"method": "GET",
+							"param": "",
+							"attack": "",
+							"evidence": "1793977980",
+							"otherinfo": "1793977980, which evaluates to: 2026-11-06 15:13:00."
+						},
+						{
+							"id": "132",
+							"uri": "https://www.pimex.pl/deski-tarasowe-wzdluz-czy-wszerz/",
+							"nodeName": "https:\/\/www.pimex.pl\/deski-tarasowe-wzdluz-czy-wszerz\/",
+							"method": "GET",
+							"param": "",
+							"attack": "",
+							"evidence": "1793977980",
+							"otherinfo": "1793977980, which evaluates to: 2026-11-06 15:13:00."
+						},
+						{
+							"id": "127",
+							"uri": "https://www.pimex.pl/jakie-szczeliny-miedzy-deskami-tarasowymi/",
+							"nodeName": "https:\/\/www.pimex.pl\/jakie-szczeliny-miedzy-deskami-tarasowymi\/",
+							"method": "GET",
+							"param": "",
+							"attack": "",
+							"evidence": "1793977137",
+							"otherinfo": "1793977137, which evaluates to: 2026-11-06 14:58:57."
+						}
+					],
+					"count": "5",
+					"systemic": true,
+					"solution": "<p>Manually confirm that the timestamp data is not sensitive, and that the data cannot be aggregated to disclose exploitable patterns.</p>",
+					"otherinfo": "<p>1794050393, which evaluates to: 2026-11-07 11:19:53.</p>",
+					"reference": "<p>https://cwe.mitre.org/data/definitions/200.html</p>",
+					"cweid": "497",
+					"wascid": "13",
+					"sourceid": "5"
+				},
+				{
+					"pluginid": "10021",
+					"alertRef": "10021",
+					"alert": "X-Content-Type-Options Header Missing",
+					"name": "X-Content-Type-Options Header Missing",
+					"riskcode": "1",
+					"confidence": "2",
+					"riskdesc": "Low (Medium)",
+					"desc": "<p>The Anti-MIME-Sniffing header X-Content-Type-Options was not set to 'nosniff'. This allows older versions of Internet Explorer and Chrome to perform MIME-sniffing on the response body, potentially causing the response body to be interpreted and displayed as a content type other than the declared content type. Current (early 2014) and legacy versions of Firefox will use the declared content type (if one is set), rather than performing MIME-sniffing.</p>",
+					"instances":[ 
+						{
+							"id": "167",
+							"uri": "https://www.pimex.pl/co-miedzy-legarami-a-deskami-tarasowymi/",
+							"nodeName": "https:\/\/www.pimex.pl\/co-miedzy-legarami-a-deskami-tarasowymi\/",
+							"method": "GET",
+							"param": "x-content-type-options",
+							"attack": "",
+							"evidence": "",
+							"otherinfo": "This issue still applies to error type pages (401, 403, 500, etc.) as those pages are often still affected by injection issues, in which case there is still concern for browsers sniffing pages away from their actual content type.\nAt \"High\" threshold this scan rule will not alert on client or server error responses."
+						},
+						{
+							"id": "181",
+							"uri": "https://www.pimex.pl/czym-ciac-deski-kompozytowe/",
+							"nodeName": "https:\/\/www.pimex.pl\/czym-ciac-deski-kompozytowe\/",
+							"method": "GET",
+							"param": "x-content-type-options",
+							"attack": "",
+							"evidence": "",
+							"otherinfo": "This issue still applies to error type pages (401, 403, 500, etc.) as those pages are often still affected by injection issues, in which case there is still concern for browsers sniffing pages away from their actual content type.\nAt \"High\" threshold this scan rule will not alert on client or server error responses."
+						},
+						{
+							"id": "176",
+							"uri": "https://www.pimex.pl/deski-tarasowe-wzdluz-czy-wszerz/",
+							"nodeName": "https:\/\/www.pimex.pl\/deski-tarasowe-wzdluz-czy-wszerz\/",
+							"method": "GET",
+							"param": "x-content-type-options",
+							"attack": "",
+							"evidence": "",
+							"otherinfo": "This issue still applies to error type pages (401, 403, 500, etc.) as those pages are often still affected by injection issues, in which case there is still concern for browsers sniffing pages away from their actual content type.\nAt \"High\" threshold this scan rule will not alert on client or server error responses."
+						},
+						{
+							"id": "182",
+							"uri": "https://www.pimex.pl/jakie-legary-pod-taras/",
+							"nodeName": "https:\/\/www.pimex.pl\/jakie-legary-pod-taras\/",
+							"method": "GET",
+							"param": "x-content-type-options",
+							"attack": "",
+							"evidence": "",
+							"otherinfo": "This issue still applies to error type pages (401, 403, 500, etc.) as those pages are often still affected by injection issues, in which case there is still concern for browsers sniffing pages away from their actual content type.\nAt \"High\" threshold this scan rule will not alert on client or server error responses."
+						},
+						{
+							"id": "175",
+							"uri": "https://www.pimex.pl/jakie-szczeliny-miedzy-deskami-tarasowymi/",
+							"nodeName": "https:\/\/www.pimex.pl\/jakie-szczeliny-miedzy-deskami-tarasowymi\/",
+							"method": "GET",
+							"param": "x-content-type-options",
+							"attack": "",
+							"evidence": "",
+							"otherinfo": "This issue still applies to error type pages (401, 403, 500, etc.) as those pages are often still affected by injection issues, in which case there is still concern for browsers sniffing pages away from their actual content type.\nAt \"High\" threshold this scan rule will not alert on client or server error responses."
+						}
+					],
+					"count": "5",
+					"systemic": true,
+					"solution": "<p>Ensure that the application/web server sets the Content-Type header appropriately, and that it sets the X-Content-Type-Options header to 'nosniff' for all web pages.</p><p>If possible, ensure that the end user uses a standards-compliant and modern web browser that does not perform MIME-sniffing at all, or that can be directed by the web application/web server to not perform MIME-sniffing.</p>",
+					"otherinfo": "<p>This issue still applies to error type pages (401, 403, 500, etc.) as those pages are often still affected by injection issues, in which case there is still concern for browsers sniffing pages away from their actual content type.</p><p>At \"High\" threshold this scan rule will not alert on client or server error responses.</p>",
+					"reference": "<p>https://learn.microsoft.com/en-us/previous-versions/windows/internet-explorer/ie-developer/compatibility/gg622941(v=vs.85)</p><p>https://owasp.org/www-community/Security_Headers</p>",
+					"cweid": "693",
+					"wascid": "15",
+					"sourceid": "14"
+				},
+				{
+					"pluginid": "10109",
+					"alertRef": "10109",
+					"alert": "Modern Web Application",
+					"name": "Modern Web Application",
+					"riskcode": "0",
+					"confidence": "2",
+					"riskdesc": "Informational (Medium)",
+					"desc": "<p>The application appears to be a modern web application. If you need to explore it automatically then the Client Spider may well be more effective than the standard one.</p>",
+					"instances":[ 
+						{
+							"id": "78",
+							"uri": "https://www.pimex.pl/co-miedzy-legarami-a-deskami-tarasowymi/",
+							"nodeName": "https:\/\/www.pimex.pl\/co-miedzy-legarami-a-deskami-tarasowymi\/",
+							"method": "GET",
+							"param": "",
+							"attack": "",
+							"evidence": "<a href=\"#\" data-val=\"0\">Wybierz kategori\u0119</a>",
+							"otherinfo": "Links have been found that do not have traditional href attributes, which is an indication that this is a modern web application."
+						},
+						{
+							"id": "79",
+							"uri": "https://www.pimex.pl/drzwi-drewniane/",
+							"nodeName": "https:\/\/www.pimex.pl\/drzwi-drewniane\/",
+							"method": "GET",
+							"param": "",
+							"attack": "",
+							"evidence": "<a href=\"#\" data-val=\"0\">Wybierz kategori\u0119</a>",
+							"otherinfo": "Links have been found that do not have traditional href attributes, which is an indication that this is a modern web application."
+						},
+						{
+							"id": "77",
+							"uri": "https://www.pimex.pl/jakie-legary-pod-taras/",
+							"nodeName": "https:\/\/www.pimex.pl\/jakie-legary-pod-taras\/",
+							"method": "GET",
+							"param": "",
+							"attack": "",
+							"evidence": "<a href=\"#\" data-val=\"0\">Wybierz kategori\u0119</a>",
+							"otherinfo": "Links have been found that do not have traditional href attributes, which is an indication that this is a modern web application."
+						},
+						{
+							"id": "76",
+							"uri": "https://www.pimex.pl/jakie-szczeliny-miedzy-deskami-tarasowymi/",
+							"nodeName": "https:\/\/www.pimex.pl\/jakie-szczeliny-miedzy-deskami-tarasowymi\/",
+							"method": "GET",
+							"param": "",
+							"attack": "",
+							"evidence": "<a href=\"#\" data-val=\"0\">Wybierz kategori\u0119</a>",
+							"otherinfo": "Links have been found that do not have traditional href attributes, which is an indication that this is a modern web application."
+						},
+						{
+							"id": "75",
+							"uri": "https://www.pimex.pl/uslugi-montaz/",
+							"nodeName": "https:\/\/www.pimex.pl\/uslugi-montaz\/",
+							"method": "GET",
+							"param": "",
+							"attack": "",
+							"evidence": "<a href=\"#\" data-val=\"0\">Wybierz kategori\u0119</a>",
+							"otherinfo": "Links have been found that do not have traditional href attributes, which is an indication that this is a modern web application."
+						}
+					],
+					"count": "5",
+					"systemic": true,
+					"solution": "<p>This is an informational alert and so no changes are required.</p>",
+					"otherinfo": "<p>Links have been found that do not have traditional href attributes, which is an indication that this is a modern web application.</p>",
+					"reference": "",
+					"cweid": "-1",
+					"wascid": "-1",
+					"sourceid": "14"
+				},
+				{
+					"pluginid": "10015",
+					"alertRef": "10015",
+					"alert": "Re-examine Cache-control Directives",
+					"name": "Re-examine Cache-control Directives",
+					"riskcode": "0",
+					"confidence": "1",
+					"riskdesc": "Informational (Low)",
+					"desc": "<p>The cache-control header has not been set properly or is missing, allowing the browser and proxies to cache content. For static assets like css, js, or image files this might be intended, however, the resources should be reviewed to ensure that no sensitive content will be cached.</p>",
+					"instances":[ 
+						{
+							"id": "18",
+							"uri": "https://www.pimex.pl/blaty/",
+							"nodeName": "https:\/\/www.pimex.pl\/blaty\/",
+							"method": "GET",
+							"param": "cache-control",
+							"attack": "",
+							"evidence": "max-age=2592000, must-revalidate",
+							"otherinfo": ""
+						},
+						{
+							"id": "19",
+							"uri": "https://www.pimex.pl/czym-ciac-deski-kompozytowe/",
+							"nodeName": "https:\/\/www.pimex.pl\/czym-ciac-deski-kompozytowe\/",
+							"method": "GET",
+							"param": "cache-control",
+							"attack": "",
+							"evidence": "max-age=2592000, must-revalidate",
+							"otherinfo": ""
+						},
+						{
+							"id": "17",
+							"uri": "https://www.pimex.pl/deski-tarasowe-wzdluz-czy-wszerz/",
+							"nodeName": "https:\/\/www.pimex.pl\/deski-tarasowe-wzdluz-czy-wszerz\/",
+							"method": "GET",
+							"param": "cache-control",
+							"attack": "",
+							"evidence": "max-age=2592000, must-revalidate",
+							"otherinfo": ""
+						},
+						{
+							"id": "20",
+							"uri": "https://www.pimex.pl/drzwi-drewniane/",
+							"nodeName": "https:\/\/www.pimex.pl\/drzwi-drewniane\/",
+							"method": "GET",
+							"param": "cache-control",
+							"attack": "",
+							"evidence": "max-age=2592000, must-revalidate",
+							"otherinfo": ""
+						},
+						{
+							"id": "14",
+							"uri": "https://www.pimex.pl/pozostale/",
+							"nodeName": "https:\/\/www.pimex.pl\/pozostale\/",
+							"method": "GET",
+							"param": "cache-control",
+							"attack": "",
+							"evidence": "max-age=2592000, must-revalidate",
+							"otherinfo": ""
+						}
+					],
+					"count": "5",
+					"systemic": true,
+					"solution": "<p>For secure content, ensure the cache-control HTTP header is set with \"no-cache, no-store, must-revalidate\". If an asset should be cached consider setting the directives \"public, max-age, immutable\".</p>",
+					"otherinfo": "",
+					"reference": "<p>https://cheatsheetseries.owasp.org/cheatsheets/Session_Management_Cheat_Sheet.html#web-content-caching</p><p>https://developer.mozilla.org/en-US/docs/Web/HTTP/Reference/Headers/Cache-Control</p><p>https://grayduck.mn/2021/09/13/cache-control-recommendations/</p>",
+					"cweid": "525",
+					"wascid": "13",
+					"sourceid": "20"
+				},
+				{
+					"pluginid": "10049",
+					"alertRef": "10049-3",
+					"alert": "Storable and Cacheable Content",
+					"name": "Storable and Cacheable Content",
+					"riskcode": "0",
+					"confidence": "2",
+					"riskdesc": "Informational (Medium)",
+					"desc": "<p>The response contents are storable by caching components such as proxy servers, and may be retrieved directly from the cache, rather than from the origin server by the caching servers, in response to similar requests from other users. If the response data is sensitive, personal or user-specific, this may result in sensitive information being leaked. In some cases, this may even result in a user gaining complete control of the session of another user, depending on the configuration of the caching components in use in their environment. This is primarily an issue where \"shared\" caching servers such as \"proxy\" caches are configured on the local network. This configuration is typically found in corporate or educational environments, for instance.</p>",
+					"instances":[ 
+						{
+							"id": "170",
+							"uri": "https://www.pimex.pl/co-miedzy-legarami-a-deskami-tarasowymi/",
+							"nodeName": "https:\/\/www.pimex.pl\/co-miedzy-legarami-a-deskami-tarasowymi\/",
+							"method": "GET",
+							"param": "",
+							"attack": "",
+							"evidence": "max-age=2592000",
+							"otherinfo": ""
+						},
+						{
+							"id": "188",
+							"uri": "https://www.pimex.pl/czym-ciac-deski-kompozytowe/",
+							"nodeName": "https:\/\/www.pimex.pl\/czym-ciac-deski-kompozytowe\/",
+							"method": "GET",
+							"param": "",
+							"attack": "",
+							"evidence": "max-age=2592000",
+							"otherinfo": ""
+						},
+						{
+							"id": "184",
+							"uri": "https://www.pimex.pl/deski-tarasowe-wzdluz-czy-wszerz/",
+							"nodeName": "https:\/\/www.pimex.pl\/deski-tarasowe-wzdluz-czy-wszerz\/",
+							"method": "GET",
+							"param": "",
+							"attack": "",
+							"evidence": "max-age=2592000",
+							"otherinfo": ""
+						},
+						{
+							"id": "183",
+							"uri": "https://www.pimex.pl/jakie-szczeliny-miedzy-deskami-tarasowymi/",
+							"nodeName": "https:\/\/www.pimex.pl\/jakie-szczeliny-miedzy-deskami-tarasowymi\/",
+							"method": "GET",
+							"param": "",
+							"attack": "",
+							"evidence": "max-age=2592000",
+							"otherinfo": ""
+						},
+						{
+							"id": "192",
+							"uri": "https://www.pimex.pl/uslugi-montaz/",
+							"nodeName": "https:\/\/www.pimex.pl\/uslugi-montaz\/",
+							"method": "GET",
+							"param": "",
+							"attack": "",
+							"evidence": "max-age=2592000",
+							"otherinfo": ""
+						}
+					],
+					"count": "5",
+					"systemic": true,
+					"solution": "<p>Validate that the response does not contain sensitive, personal or user-specific information. If it does, consider the use of the following HTTP response headers, to limit, or prevent the content being stored and retrieved from the cache by another user:</p><p>Cache-Control: no-cache, no-store, must-revalidate, private</p><p>Pragma: no-cache</p><p>Expires: 0</p><p>This configuration directs both HTTP 1.0 and HTTP 1.1 compliant caching servers to not store the response, and to not retrieve the response (without validation) from the cache, in response to a similar request.</p>",
+					"otherinfo": "",
+					"reference": "<p>https://datatracker.ietf.org/doc/html/rfc7234</p><p>https://datatracker.ietf.org/doc/html/rfc7231</p><p>https://www.w3.org/Protocols/rfc2616/rfc2616-sec13.html</p>",
+					"cweid": "524",
+					"wascid": "13",
+					"sourceid": "14"
+				}
+			]
+		},
+		{
+			"@name": "http://www.pimex.pl",
+			"@host": "www.pimex.pl",
+			"@port": "80",
+			"@ssl": "false",
+			"alerts": [ 
+				{
+					"pluginid": "10049",
+					"alertRef": "10049-2",
+					"alert": "Storable but Non-Cacheable Content",
+					"name": "Storable but Non-Cacheable Content",
+					"riskcode": "0",
+					"confidence": "2",
+					"riskdesc": "Informational (Medium)",
+					"desc": "<p>The response contents are storable by caching components such as proxy servers, but will not be retrieved directly from the cache, without validating the request upstream, in response to similar requests from other users.</p>",
+					"instances":[ 
+						{
+							"id": "1",
+							"uri": "http://www.pimex.pl/",
+							"nodeName": "http:\/\/www.pimex.pl\/",
+							"method": "GET",
+							"param": "",
+							"attack": "",
+							"evidence": "max-age=0",
+							"otherinfo": ""
+						}
+					],
+					"count": "1",
+					"systemic": false,
+					"solution": "",
+					"otherinfo": "",
+					"reference": "<p>https://datatracker.ietf.org/doc/html/rfc7234</p><p>https://datatracker.ietf.org/doc/html/rfc7231</p><p>https://www.w3.org/Protocols/rfc2616/rfc2616-sec13.html</p>",
+					"cweid": "524",
+					"wascid": "13",
+					"sourceid": "3"
+				}
+			]
+		},
+		{
+			"@name": "https://pimex.pl",
+			"@host": "pimex.pl",
+			"@port": "443",
+			"@ssl": "true",
+			"alerts": [ 
+				{
+					"pluginid": "20020",
+					"alertRef": "20020-1",
+					"alert": "PHP Version with Known Vulnerabilities",
+					"name": "PHP Version with Known Vulnerabilities",
+					"riskcode": "3",
+					"confidence": "1",
+					"riskdesc": "High (Low)",
+					"desc": "<p>The server disclosed the version of a server side technology it is running via an HTTP response header, and that version is affected by known vulnerabilities. The version, header and vulnerabilities, listed by severity, are given in the other info. See the references for the details of each.</p><p>Note that some distributions backport security fixes without changing the version number, so check whether the fixes have actually been applied before reporting these as confirmed.</p>",
+					"instances":[ 
+						{
+							"id": "980",
+							"uri": "https://pimex.pl/sitemap.xml",
+							"nodeName": "https:\/\/pimex.pl\/sitemap.xml",
+							"method": "GET",
+							"param": "",
+							"attack": "",
+							"evidence": "PHP/8.2.35",
+							"otherinfo": "The server disclosed that it is running PHP version 8.2.35 via the \"X-Powered-By\" HTTP response header.\n\n6 known vulnerabilities: 0 critical, 4 high, 2 medium, 0 low.\n\nThe version disclosed is older than any version listed in the advisories, so it is assumed to be affected because older, end-of-life release branches rarely receive fixes.\n\nHigh: CVE-2024-2757, CVE-2026-12184, CVE-2026-17544, CVE-2026-7263\n\nMedium: CVE-2024-11235, CVE-2026-6104"
+						}
+					],
+					"count": "1",
+					"systemic": false,
+					"solution": "<p>Upgrade PHP to a supported version which includes fixes for the listed vulnerabilities. Also configure the server not to disclose the PHP version, e.g. by setting \"expose_php = Off\" in php.ini and suppressing version details in the \"Server\" header.</p>",
+					"otherinfo": "<p>The server disclosed that it is running PHP version 8.2.35 via the \"X-Powered-By\" HTTP response header.</p><p></p><p>6 known vulnerabilities: 0 critical, 4 high, 2 medium, 0 low.</p><p></p><p>The version disclosed is older than any version listed in the advisories, so it is assumed to be affected because older, end-of-life release branches rarely receive fixes.</p><p></p><p>High: CVE-2024-2757, CVE-2026-12184, CVE-2026-17544, CVE-2026-7263</p><p></p><p>Medium: CVE-2024-11235, CVE-2026-6104</p>",
+					"reference": "<p>https://www.php.net/supported-versions.php</p><p>https://github.com/php/php-src/security/advisories</p><p>https://www.zaproxy.org/docs/desktop/addons/passive-scan-rules/php-known-vulnerabilities/#cve-2024-2757</p><p>https://www.zaproxy.org/docs/desktop/addons/passive-scan-rules/php-known-vulnerabilities/#cve-2026-12184</p><p>https://www.zaproxy.org/docs/desktop/addons/passive-scan-rules/php-known-vulnerabilities/#cve-2026-17544</p><p>https://www.zaproxy.org/docs/desktop/addons/passive-scan-rules/php-known-vulnerabilities/#cve-2026-7263</p><p>https://www.zaproxy.org/docs/desktop/addons/passive-scan-rules/php-known-vulnerabilities/#cve-2024-11235</p><p>https://www.zaproxy.org/docs/desktop/addons/passive-scan-rules/php-known-vulnerabilities/#cve-2026-6104</p>",
+					"cweid": "1395",
+					"wascid": "13",
+					"sourceid": "145"
+				},
+				{
+					"pluginid": "10010",
+					"alertRef": "10010",
+					"alert": "Cookie No HttpOnly Flag",
+					"name": "Cookie No HttpOnly Flag",
+					"riskcode": "1",
+					"confidence": "2",
+					"riskdesc": "Low (Medium)",
+					"desc": "<p>A cookie has been set without the HttpOnly flag, which means that the cookie can be accessed by JavaScript. If a malicious script can be run on this page then the cookie will be accessible and can be transmitted to another site. If this is a session cookie then session hijacking may be possible.</p>",
+					"instances":[ 
+						{
+							"id": "982",
+							"uri": "https://pimex.pl/zamow-probki/",
+							"nodeName": "https:\/\/pimex.pl\/zamow-probki\/",
+							"method": "GET",
+							"param": "PHPSESSID",
+							"attack": "",
+							"evidence": "Set-Cookie: PHPSESSID",
+							"otherinfo": ""
+						}
+					],
+					"count": "1",
+					"systemic": false,
+					"solution": "<p>Ensure that the HttpOnly flag is set for all cookies.</p>",
+					"otherinfo": "",
+					"reference": "<p>https://owasp.org/www-community/HttpOnly</p>",
+					"cweid": "1004",
+					"wascid": "13",
+					"sourceid": "147"
+				},
+				{
+					"pluginid": "10011",
+					"alertRef": "10011",
+					"alert": "Cookie Without Secure Flag",
+					"name": "Cookie Without Secure Flag",
+					"riskcode": "1",
+					"confidence": "2",
+					"riskdesc": "Low (Medium)",
+					"desc": "<p>A cookie has been set without the secure flag, which means that the cookie can be accessed via unencrypted connections.</p>",
+					"instances":[ 
+						{
+							"id": "984",
+							"uri": "https://pimex.pl/zamow-probki/",
+							"nodeName": "https:\/\/pimex.pl\/zamow-probki\/",
+							"method": "GET",
+							"param": "PHPSESSID",
+							"attack": "",
+							"evidence": "Set-Cookie: PHPSESSID",
+							"otherinfo": ""
+						}
+					],
+					"count": "1",
+					"systemic": false,
+					"solution": "<p>Whenever a cookie contains sensitive information or is a session token, then it should always be passed using an encrypted channel. Ensure that the secure flag is set for cookies containing such sensitive information.</p>",
+					"otherinfo": "",
+					"reference": "<p>https://owasp.org/www-project-web-security-testing-guide/v41/4-Web_Application_Security_Testing/06-Session_Management_Testing/02-Testing_for_Cookies_Attributes.html</p>",
+					"cweid": "614",
+					"wascid": "13",
+					"sourceid": "147"
+				},
+				{
+					"pluginid": "10054",
+					"alertRef": "10054-1",
+					"alert": "Cookie without SameSite Attribute",
+					"name": "Cookie without SameSite Attribute",
+					"riskcode": "1",
+					"confidence": "2",
+					"riskdesc": "Low (Medium)",
+					"desc": "<p>A cookie has been set without the SameSite attribute, which means that the cookie can be sent as a result of a 'cross-site' request. The SameSite attribute is an effective counter measure to cross-site request forgery, cross-site script inclusion, and timing attacks.</p>",
+					"instances":[ 
+						{
+							"id": "983",
+							"uri": "https://pimex.pl/zamow-probki/",
+							"nodeName": "https:\/\/pimex.pl\/zamow-probki\/",
+							"method": "GET",
+							"param": "PHPSESSID",
+							"attack": "",
+							"evidence": "Set-Cookie: PHPSESSID",
+							"otherinfo": ""
+						}
+					],
+					"count": "1",
+					"systemic": false,
+					"solution": "<p>Ensure that the SameSite attribute is set to either 'lax' or ideally 'strict' for all cookies.</p>",
+					"otherinfo": "",
+					"reference": "<p>https://datatracker.ietf.org/doc/html/draft-ietf-httpbis-cookie-same-site</p>",
+					"cweid": "1275",
+					"wascid": "13",
+					"sourceid": "147"
+				},
+				{
+					"pluginid": "10037",
+					"alertRef": "10037",
+					"alert": "Server Leaks Information via \"X-Powered-By\" HTTP Response Header Field(s)",
+					"name": "Server Leaks Information via \"X-Powered-By\" HTTP Response Header Field(s)",
+					"riskcode": "1",
+					"confidence": "2",
+					"riskdesc": "Low (Medium)",
+					"desc": "<p>The web/application server is leaking information via one or more \"X-Powered-By\" HTTP response headers. Access to such information may facilitate attackers identifying other frameworks/components your web application is reliant upon and the vulnerabilities such components may be subject to.</p>",
+					"instances":[ 
+						{
+							"id": "981",
+							"uri": "https://pimex.pl/sitemap.xml",
+							"nodeName": "https:\/\/pimex.pl\/sitemap.xml",
+							"method": "GET",
+							"param": "",
+							"attack": "",
+							"evidence": "X-Powered-By: PHP/8.2.35",
+							"otherinfo": ""
+						},
+						{
+							"id": "985",
+							"uri": "https://pimex.pl/zamow-probki/",
+							"nodeName": "https:\/\/pimex.pl\/zamow-probki\/",
+							"method": "GET",
+							"param": "",
+							"attack": "",
+							"evidence": "X-Powered-By: PHP/8.2.35",
+							"otherinfo": ""
+						}
+					],
+					"count": "2",
+					"systemic": false,
+					"solution": "<p>Ensure that your web server, application server, load balancer, etc. is configured to suppress \"X-Powered-By\" headers.</p>",
+					"otherinfo": "",
+					"reference": "<p>https://owasp.org/www-project-web-security-testing-guide/v42/4-Web_Application_Security_Testing/01-Information_Gathering/08-Fingerprint_Web_Application_Framework</p><p>https://www.troyhunt.com/shhh-dont-let-your-response-headers/</p>",
+					"cweid": "497",
+					"wascid": "13",
+					"sourceid": "145"
+				},
+				{
+					"pluginid": "10035",
+					"alertRef": "10035-1",
+					"alert": "Strict-Transport-Security Header Not Set",
+					"name": "Strict-Transport-Security Header Not Set",
+					"riskcode": "1",
+					"confidence": "3",
+					"riskdesc": "Low (High)",
+					"desc": "<p>HTTP Strict Transport Security (HSTS) is a web security policy mechanism whereby a web server declares that complying user agents (such as a web browser) are to interact with it using only secure HTTPS connections (i.e. HTTP layered over TLS/SSL). HSTS is an IETF standards track protocol and is specified in RFC 6797.</p>",
+					"instances":[ 
+						{
+							"id": "0",
+							"uri": "https://pimex.pl/",
+							"nodeName": "https:\/\/pimex.pl\/",
+							"method": "GET",
+							"param": "",
+							"attack": "",
+							"evidence": "",
+							"otherinfo": ""
+						}
+					],
+					"count": "1",
+					"systemic": true,
+					"solution": "<p>Ensure that your web server, application server, load balancer, etc. is configured to enforce Strict-Transport-Security.</p>",
+					"otherinfo": "",
+					"reference": "<p>https://cheatsheetseries.owasp.org/cheatsheets/HTTP_Strict_Transport_Security_Cheat_Sheet.html</p><p>https://owasp.org/www-community/Security_Headers</p><p>https://en.wikipedia.org/wiki/HTTP_Strict_Transport_Security</p><p>https://caniuse.com/stricttransportsecurity</p><p>https://datatracker.ietf.org/doc/html/rfc6797</p>",
+					"cweid": "319",
+					"wascid": "15",
+					"sourceid": "1"
+				},
+				{
+					"pluginid": "10112",
+					"alertRef": "10112",
+					"alert": "Session Management Response Identified",
+					"name": "Session Management Response Identified",
+					"riskcode": "0",
+					"confidence": "2",
+					"riskdesc": "Informational (Medium)",
+					"desc": "<p>The given response has been identified as containing a session management token. The 'Other Info' field contains a set of header tokens that can be used in the Header Based Session Management Method. If the request is in a context which has a Session Management Method set to \"Auto-Detect\" then this rule will change the session management to use the tokens identified.</p>",
+					"instances":[ 
+						{
+							"id": "986",
+							"uri": "https://pimex.pl/zamow-probki/",
+							"nodeName": "https:\/\/pimex.pl\/zamow-probki\/",
+							"method": "GET",
+							"param": "PHPSESSID",
+							"attack": "",
+							"evidence": "PHPSESSID",
+							"otherinfo": "cookie:PHPSESSID"
+						}
+					],
+					"count": "1",
+					"systemic": false,
+					"solution": "<p>This is an informational alert rather than a vulnerability and so there is nothing to fix.</p>",
+					"otherinfo": "<p>cookie:PHPSESSID</p>",
+					"reference": "<p>https://www.zaproxy.org/docs/desktop/addons/authentication-helper/session-mgmt-id/</p>",
+					"cweid": "-1",
+					"wascid": "-1",
+					"sourceid": "147"
+				},
+				{
+					"pluginid": "10049",
+					"alertRef": "10049-2",
+					"alert": "Storable but Non-Cacheable Content",
+					"name": "Storable but Non-Cacheable Content",
+					"riskcode": "0",
+					"confidence": "2",
+					"riskdesc": "Informational (Medium)",
+					"desc": "<p>The response contents are storable by caching components such as proxy servers, but will not be retrieved directly from the cache, without validating the request upstream, in response to similar requests from other users.</p>",
+					"instances":[ 
+						{
+							"id": "2",
+							"uri": "https://pimex.pl/",
+							"nodeName": "https:\/\/pimex.pl\/",
+							"method": "GET",
+							"param": "",
+							"attack": "",
+							"evidence": "max-age=0",
+							"otherinfo": ""
+						}
+					],
+					"count": "1",
+					"systemic": false,
+					"solution": "",
+					"otherinfo": "",
+					"reference": "<p>https://datatracker.ietf.org/doc/html/rfc7234</p><p>https://datatracker.ietf.org/doc/html/rfc7231</p><p>https://www.w3.org/Protocols/rfc2616/rfc2616-sec13.html</p>",
+					"cweid": "524",
+					"wascid": "13",
+					"sourceid": "1"
+				}
+			]
+		}
+	],
+	"sequences":[
+	]
+
+}
