@@ -199,6 +199,15 @@ def make_handler(db_path: str, job: ScanJob):
                 return self._json({"error": "Inny skan jest jeszcze w toku."}, 409)
             self._json({"target": target}, 202)
 
+        def do_DELETE(self) -> None:
+            path = urlsplit(self.path).path
+            if m := re.fullmatch(r"/api/scans/(\d+)", path):
+                scan_id = int(m.group(1))
+                with Storage(db_path) as db:
+                    deleted = db.delete_scan(scan_id)
+                return self._json({"deleted": scan_id}, 200) if deleted else self._json({"error": "Nie ma takiego skanu."}, 404)
+            self._json({"error": "Nie znaleziono."}, 404)
+
     return Handler
 
 

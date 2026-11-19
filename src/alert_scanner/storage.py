@@ -65,6 +65,12 @@ class Storage:
         ).fetchone()
         return row[0] if row else None
 
+    def delete_scan(self, scan_id: int) -> bool:
+        """Delete a scan and its findings/instances. Returns False if it did not exist."""
+        with self._connection:
+            cursor = self._connection.execute("DELETE FROM scans WHERE id = ?", (scan_id,))
+        return cursor.rowcount > 0
+
     def list_scans(self) -> list[ScanSummary]:
         """Newest first."""
         rows = self._connection.execute(

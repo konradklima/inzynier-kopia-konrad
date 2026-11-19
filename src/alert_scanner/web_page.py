@@ -28,6 +28,8 @@ select{padding:10px 12px;border:1px solid #cfd0d8;border-radius:999px;background
 .btn{background:var(--blue);color:#fff;border:0;border-radius:999px;padding:10px 20px;font-weight:600;font-size:14px;cursor:pointer}
 .btn:disabled{opacity:.55;cursor:default}
 .btn.ghost{background:#fff;color:var(--fg);border:1px solid #cfd0d8}
+.btn.del{background:#fff;color:#a31d20;border:1px solid #f0c2c3;border-radius:8px;padding:5px 11px;font-size:12px;font-weight:600;cursor:pointer}
+.btn.del:hover{background:var(--redbg)}
 .opts{display:none;width:100%;font-size:12.5px;color:var(--muted);gap:16px;flex-wrap:wrap}
 .opts label{display:flex;gap:6px;align-items:center}
 .opts.show{display:flex}
@@ -57,7 +59,7 @@ h2 a{font-size:13px;color:var(--blue);cursor:pointer;font-weight:500}
 .row .t{flex:1;min-width:0}.row .t b{display:block;font-size:14.5px}
 code,.mono{font-family:ui-monospace,Menlo,Consolas,monospace;font-size:12px;color:var(--muted);overflow-wrap:anywhere}
 .badge{padding:5px 12px;border-radius:8px;font-size:12px;font-weight:700;white-space:nowrap}
-.high{background:var(--redbg);color:#a31d20}.medium{background:var(--orangebg);color:#9a4a00}.low{background:var(--yellowbg);color:#6b5100}
+.high{background:var(--redbg);color:#a31d20}.medium{background:var(--orangebg);color:#9a4a00}.low{background:var(--yellowbg);color:#1d6e36}
 .ico.high{background:var(--red)}.ico.medium{background:var(--orange)}.ico.low{background:#d4a72c}
 .empty{padding:30px;text-align:center;color:var(--muted)}
 .crumb{color:var(--muted);font-size:12.5px;margin-bottom:12px}.crumb b{color:var(--fg)}
@@ -184,7 +186,21 @@ function dash(v){
 function threats(v){v.innerHTML=`<div class="list">${current.real.length?current.real.map(threatRow).join(""):'<div class="empty">Nic do naprawienia.</div>'}</div>`}
 async function scans(v){
   const list=await api("/api/scans");
-  v.innerHTML=`<div class="list">${list.length?list.map(s=>`<div class="row" onclick="openScan(${s.id})"><div class="t"><b>${esc(s.target)}</b><code>skan #${s.id} · ${fmt(s.created_at)}</code></div><span class="badge ${s.real?"high":"low"}">${s.real} do naprawy</span><span style="color:var(--muted)">›</span></div>`).join(""):'<div class="empty">Brak zapisanych skanów.</div>'}</div>`;
+  v.innerHTML=`<div class="list">${list.length?list.map(s=>`<div class="row" onclick="openScan(${s.id})"><div class="t"><b>${esc(s.target)}</b><code>skan #${s.id} · ${fmt(s.created_at)}</code></div><span class="badge ${s.real?"high":"low"}">${s.real} do naprawy</span><button class="btn del" type="button" onclick="deleteScan(event,${s.id})">Usuń</button><span style="color:var(--muted)">›</span></div>`).join(""):'<div class="empty">Brak zapisanych skanów.</div>'}</div>`;
+}
+async function deleteScan(e,id){
+  e.stopPropagation();
+  const target=e.currentTarget.closest(".row").querySelector("b").textContent;
+  if(!confirm(`Czy na pewno chcesz usunąć skan #${id} (${target})?`))return;
+  try{
+    await api("/api/scans/"+id,{method:"DELETE"});
+    if(current&&current.id===id){
+      const left=await api("/api/scans");
+      current=left.length?await api("/api/scans/"+left[0].id):null;
+    }
+    setMsg("ok",`Usunięto skan #${id}.`);
+    render();
+  }catch(err){setMsg("err",esc(err.message))}
 }
 async function openScan(id){await load(id);go("dash")}
 function detail(v,i){
