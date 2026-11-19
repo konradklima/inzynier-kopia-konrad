@@ -1,10 +1,50 @@
-# Scan target: OWASP Juice Shop, an intentionally vulnerable training app.
-# Start: docker compose up -d   (then open http://localhost:3000)
+# Scan targets: intentionally vulnerable training apps. They give real findings and a
+# known truth (their documentation lists the vulnerabilities), which we use to label
+# training data for the ML classifier.
+# Start: docker compose up -d
 # ZAP is not a service here: alert-scanner --scan starts a fresh ZAP container per scan.
 services:
   juice-shop:
     image: bkimminich/juice-shop:latest
     container_name: alert-scanner-juice-shop
     ports:
-      - "3000:3000"
+      - "3000:3000"   # http://localhost:3000
+    restart: unless-stopped
+
+  dvwa:
+    image: ghcr.io/digininja/dvwa:latest
+    container_name: alert-scanner-dvwa
+    ports:
+      - "4280:80"     # http://localhost:4280 (admin / password; first open /setup.php)
+    environment:
+      - DB_SERVER=dvwa-db
+    depends_on:
+      - dvwa-db
+    restart: unless-stopped
+
+  dvwa-db:
+    image: mariadb:10
+    container_name: alert-scanner-dvwa-db
+    environment:
+      - MYSQL_ROOT_PASSWORD=dvwa
+      - MYSQL_DATABASE=dvwa
+      - MYSQL_USER=dvwa
+      - MYSQL_PASSWORD=p@ssw0rd
+    restart: unless-stopped
+
+  webgoat:
+    image: webgoat/webgoat:latest
+    container_name: alert-scanner-webgoat
+    ports:
+      - "8080:8080"   # http://localhost:8080/WebGoat
+      - "9090:9090"   # WebWolf
+    restart: unless-stopped
+
+  # Fourth app, used only as the final test set for the ML classifier (never for tuning).
+  bwapp:
+    image: raesene/bwapp:latest
+    platform: linux/amd64
+    container_name: alert-scanner-bwapp
+    ports:
+      - "8081:80"     # http://localhost:8081 (bee / bug; first open /install.php)
     restart: unless-stopped
