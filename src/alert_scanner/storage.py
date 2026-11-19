@@ -1,7 +1,8 @@
 """Scan history in SQLite (standard library only).
 
-Two tables: `scans` (one scanner run) and `findings` (its findings after the risk
-assessment). The stored findings are also the training data for the ML classifier.
+Three tables: `scans` (one scanner run), `findings` (its findings after the risk
+assessment) and `instances` (every place a finding was seen). The stored instances
+are the training data for the ML classifier.
 """
 
 from __future__ import annotations
@@ -9,7 +10,7 @@ import sqlite3
 from dataclasses import dataclass
 from datetime import datetime, timezone
 from pathlib import Path
-from alert_scanner.domain import Confidence, Finding, Location, Severity, Verdict
+from alert_scanner.domain import Confidence, Finding, Instance, Location, Severity, Verdict
 
 
 class Storage:
@@ -29,20 +30,34 @@ class Storage:
             )
             scan_id = cursor.lastrowid
             placeholders = ", ".join("?" * (len(_FINDING_COLUMNS) + 1))
-            self._connection.executemany(
-                f"INSERT INTO findings (scan_id, {_COLUMN_LIST}) VALUES ({placeholders})",
-                [(scan_id, *_finding_to_row(finding)) for finding in findings],
-            )
+            for finding in findings:
+                cursor = self._connection.execute(
+                    f"INSERT INTO findings (scan_id, {_COLUMN_LIST}) VALUES ({placeholders})",
+                    (scan_id, *_finding_to_row(finding)),
+                )
+                self._connection.executemany(
+                    "INSERT INTO instances (finding_id, uri, method, param, attack, evidence, other_info) "
+                    "VALUES (?, ?, ?, ?, ?, ?, ?)",
+                    [(cursor.lastrowid, *_instance_to_row(instance)) for instance in finding.instances],
+                )
         return scan_id
 
     def load_findings(self, scan_id: int) -> list[Finding]:
         """Real findings by rank first, then the filtered ones."""
         rows = self._connection.execute(
-            f"SELECT {_COLUMN_LIST} FROM findings WHERE scan_id = ? "
+            f"SELECT id, {_COLUMN_LIST} FROM findings WHERE scan_id = ? "
             "ORDER BY rank IS NULL, rank, id",
             (scan_id,),
         ).fetchall()
-        return [_row_to_finding(row) for row in rows]
+        return [_row_to_finding(row[1:], self._load_instances(row[0])) for row in rows]
+
+    def _load_instances(self, finding_id: int) -> tuple[Instance, ...]:
+        rows = self._connection.execute(
+            "SELECT uri, method, param, attack, evidence, other_info FROM instances "
+            "WHERE finding_id = ? ORDER BY id",
+            (finding_id,),
+        ).fetchall()
+        return tuple(_row_to_instance(row) for row in rows)
 
     def scan_target(self, scan_id: int) -> str | None:
         row = self._connection.execute(
@@ -93,7 +108,19 @@ def _finding_to_row(finding: Finding) -> tuple:
     )
 
 
-def _row_to_finding(row: tuple) -> Finding:
+def _instance_to_row(instance: Instance) -> tuple:
+    return (
+        instance.location.uri, instance.location.method, instance.location.param,
+        instance.attack, instance.evidence, instance.other_info,
+    )
+
+
+def _row_to_instance(row: tuple) -> Instance:
+    uri, method, param, attack, evidence, other_info = row
+    return Instance(Location(uri=uri, method=method, param=param), attack, evidence, other_info)
+
+
+def _row_to_finding(row: tuple, instances: tuple[Instance, ...]) -> Finding:
     (rule_id, name, severity, confidence, uri, method, param, cwe_id, wasc_id,
      description, solution, occurrences, attack, evidence, verdict, rank) = row
     return Finding(
@@ -109,6 +136,7 @@ def _row_to_finding(row: tuple) -> Finding:
         occurrences=occurrences,
         attack=attack,
         evidence=evidence,
+        instances=instances,
         verdict=None if verdict is None else Verdict(verdict),
         rank=rank,
     )
@@ -141,6 +169,17 @@ CREATE TABLE IF NOT EXISTS findings (
     rank        INTEGER
 );
 CREATE INDEX IF NOT EXISTS idx_findings_scan ON findings(scan_id);
+CREATE TABLE IF NOT EXISTS instances (
+    id          INTEGER PRIMARY KEY AUTOINCREMENT,
+    finding_id  INTEGER NOT NULL REFERENCES findings(id) ON DELETE CASCADE,
+    uri         TEXT    NOT NULL,
+    method      TEXT    NOT NULL,
+    param       TEXT    NOT NULL,
+    attack      TEXT    NOT NULL,
+    evidence    TEXT    NOT NULL,
+    other_info  TEXT    NOT NULL
+);
+CREATE INDEX IF NOT EXISTS idx_instances_finding ON instances(finding_id);
 """
 
 _FINDING_COLUMNS = (

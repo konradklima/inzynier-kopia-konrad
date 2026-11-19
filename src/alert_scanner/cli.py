@@ -136,7 +136,8 @@ def _analyze(args: argparse.Namespace, console: Console) -> int:
     report = load_report(report_path)
     target = args.scan or args.target or guess_target(report)
     scope_note = _scope_note(foreign_sites(report, target))
-    assessment = assess(parse_report(report, target))
+    classifier = _classifier(args, console)
+    assessment = assess(parse_report(report, target), classifier)
 
     print_assessment(console, target, assessment, show_filtered=args.show_filtered,
                      scope_note=scope_note)
@@ -147,8 +148,20 @@ def _analyze(args: argparse.Namespace, console: Console) -> int:
             scan_id = db.save_scan(target, assessment.all_findings())
         console.line(console.dim(f"Saved as scan #{scan_id} in {args.db}"))
     if args.html:
-        _write_html(console, args.html, target, assessment, report_path.name, scope_note)
+        _write_html(console, args.html, target, assessment, report_path.name, scope_note, classifier)
     return 0
+
+
+def _classifier(args: argparse.Namespace, console: Console):
+    """None means the rules in risk_rules.py."""
+    if args.classifier == "rules":
+        return None
+    from alert_scanner.ml.model import MlClassifier
+
+    if not Path(args.model).exists():
+        raise FileNotFoundError(f"no trained model at {args.model} (run: alert-scanner-ml train)")
+    console.line(console.dim(f"Classifier: trained model {args.model}"))
+    return MlClassifier.load(args.model, mode=args.mode)
 
 
 def _show_history(args: argparse.Namespace, console: Console) -> int:
@@ -214,8 +227,9 @@ def _scope_note(foreign: dict[str, int]) -> str:
 
 
 def _write_html(console: Console, path: str, target: str, assessment: Assessment, source: str,
-                scope_note: str = "") -> None:
-    written_path = write_html_report(path, target, assessment, source=source, scope_note=scope_note)
+                scope_note: str = "", classifier=None) -> None:
+    written_path = write_html_report(path, target, assessment, source=source, scope_note=scope_note,
+                                     classifier=classifier)
     console.line(console.dim(f"HTML report: {written_path.resolve()}"))
 
 
@@ -267,6 +281,10 @@ def _build_parser() -> argparse.ArgumentParser:
 
     parser.add_argument("--target", metavar="URL",
                         help="with --report: the scanned site (default: the site with the most alerts)")
+    parser.add_argument("--classifier", choices=["rules", "ml"], default="rules",
+                        help="rules: severity+confidence (default); ml: the trained model")
+    parser.add_argument("--model", default="models/classifier.joblib",
+                        help="model file for --classifier ml")
     parser.add_argument("--compare", choices=sorted(KNOWN_APPS),
                         help="compare the result with the known vulnerabilities of a training app")
     parser.add_argument("--db", default=_DEFAULT_DB, help=f"SQLite file (default {_DEFAULT_DB})")
