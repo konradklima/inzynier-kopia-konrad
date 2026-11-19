@@ -97,7 +97,7 @@ Najprostsze uruchomienie (bez instalacji i bez aktywacji `.venv`):
 python3 run.py
 ```
 
-Na macOS można też kliknąć dwukrotnie plik `uruchom.command` w Finderze. Przeglądarka otworzy się automatycznie (domyślnie pod `http://127.0.0.1:8000`).
+Na macOS można też kliknąć dwukrotnie plik `uruchom.command` w Finderze, a na Windowsie `uruchom.bat` w Eksploratorze plików. Przeglądarka otworzy się automatycznie (domyślnie pod `http://127.0.0.1:8000`).
 
 Po zainstalowaniu pakietu (`pip install -e .`) działa też polecenie:
 
