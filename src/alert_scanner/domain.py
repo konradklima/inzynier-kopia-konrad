@@ -15,8 +15,9 @@ class Finding:
     """One issue type found on the target.
 
     `rule_id` is the id of the scanner rule that raised the alert.
-    `attack` and `evidence` come from the first occurrence: the payload the scanner
-    sent and the part of the response that confirmed the issue.
+    `instances` lists every place the scanner saw the issue (a URL and parameter, with
+    the attack payload and the response evidence). `location`, `attack` and `evidence`
+    repeat the first instance, for the summary views.
     `verdict` and `rank` stay None until risk_rules.assess() runs. `rank` is the place
     on the list (1 = fix first) and stays None for filtered findings.
     """
@@ -33,11 +34,27 @@ class Finding:
     occurrences: int = 1
     attack: str = ""
     evidence: str = ""
+    instances: tuple[Instance, ...] = ()
     verdict: Verdict | None = None
     rank: int | None = None
 
     def with_assessment(self, verdict: Verdict, rank: int | None) -> Finding:
         return replace(self, verdict=verdict, rank=rank)
+
+
+@dataclass(frozen=True, slots=True)
+class Instance:
+    """One occurrence of a finding: where it was seen and what proved it.
+
+    This is the unit the ML classifier works on and the unit we label by hand.
+    `other_info` is the scanner's note about this occurrence, e.g. which value in
+    the response it took for a timestamp.
+    """
+
+    location: Location
+    attack: str = ""
+    evidence: str = ""
+    other_info: str = ""
 
 
 @dataclass(frozen=True, slots=True)

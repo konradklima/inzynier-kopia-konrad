@@ -16,7 +16,7 @@ import re
 from pathlib import Path
 from typing import Any
 from urllib.parse import urlsplit
-from alert_scanner.domain import Confidence, Finding, Location, Severity
+from alert_scanner.domain import Confidence, Finding, Instance, Location, Severity
 
 
 def parse_report(report: dict[str, Any], target: str | None = None) -> list[Finding]:
@@ -97,25 +97,36 @@ def _sites(report: dict[str, Any]) -> list[dict[str, Any]]:
 
 
 def _parse_alert(alert: dict[str, Any], site_name: str) -> Finding:
-    instances = alert.get("instances") or []
-    first_instance = instances[0] if instances else {}
+    raw_instances = alert.get("instances") or []
+    instances = tuple(_parse_instance(raw, site_name) for raw in raw_instances)
+    first = instances[0] if instances else Instance(Location(uri=site_name))
     return Finding(
         rule_id=str(alert.get("pluginid", "")),
         name=alert.get("name") or alert.get("alert") or "Unknown alert",
         severity=_to_enum(Severity, alert.get("riskcode"), "riskcode"),
         confidence=_to_enum(Confidence, alert.get("confidence"), "confidence"),
-        location=Location(
-            uri=first_instance.get("uri") or site_name,
-            method=first_instance.get("method") or "GET",
-            param=first_instance.get("param") or "",
-        ),
+        location=first.location,
         cwe_id=_positive_int(alert.get("cweid")),
         wasc_id=_positive_int(alert.get("wascid")),
         description=strip_html(alert.get("desc", "")),
         solution=strip_html(alert.get("solution", "")),
         occurrences=_positive_int(alert.get("count")) or max(len(instances), 1),
-        attack=_truncate(first_instance.get("attack")),
-        evidence=_truncate(first_instance.get("evidence")),
+        attack=first.attack,
+        evidence=first.evidence,
+        instances=instances,
+    )
+
+
+def _parse_instance(raw: dict[str, Any], site_name: str) -> Instance:
+    return Instance(
+        location=Location(
+            uri=raw.get("uri") or site_name,
+            method=raw.get("method") or "GET",
+            param=raw.get("param") or "",
+        ),
+        attack=_truncate(raw.get("attack")),
+        evidence=_truncate(raw.get("evidence")),
+        other_info=_truncate(strip_html(raw.get("otherinfo") or "")),
     )
 
 

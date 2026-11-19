@@ -29,6 +29,8 @@ def test_parser_turns_a_zap_alert_into_a_finding():
     assert finding.location.short_path() == "/rest/search [q]"
     assert finding.attack == "'("
     assert finding.description == "Database injection"
+    assert [instance.location.param for instance in finding.instances] == ["q", "id"]
+    assert finding.instances[1].other_info == "second hit"
 
 
 def test_parser_keeps_only_the_target_site():
@@ -85,8 +87,9 @@ def test_coverage_counts_only_real_findings():
 
 
 def test_storage_keeps_the_assessment(tmp_path):
+    [real] = parse_report({"site": [{"@name": TARGET, "alerts": [_zap_alert("Real")]}]})
     findings = assess([
-        _finding(Severity.HIGH, Confidence.HIGH, name="Real"),
+        real,
         _finding(Severity.INFO, Confidence.HIGH, name="Noise"),
     ]).all_findings()
 
@@ -154,11 +157,10 @@ def _zap_alert(name="SQL Injection"):
         "wascid": "-1",
         "count": "4",
         "desc": "<p>Database <b>injection</b></p>",
-        "instances": [{
-            "uri": f"{TARGET}/rest/search?q=x",
-            "method": "GET",
-            "param": "q",
-            "attack": "'(",
-            "evidence": "HTTP/1.1 500",
-        }],
+        "instances": [
+            {"uri": f"{TARGET}/rest/search?q=x", "method": "GET", "param": "q",
+             "attack": "'(", "evidence": "HTTP/1.1 500"},
+            {"uri": f"{TARGET}/rest/products/1", "method": "GET", "param": "id",
+             "attack": "' OR 1=1--", "evidence": "SQLITE_ERROR", "otherinfo": "<p>second hit</p>"},
+        ],
     }
