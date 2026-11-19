@@ -49,8 +49,15 @@ def run_zap_scan(
     The ZAP scripts exit with a non-zero code when they find warnings, so the exit
     code is not an error signal. A missing report file is.
     """
-    if shutil.which("docker") is None:
-        raise ScanError("'docker' not found. Install and start Docker Desktop.")
+    docker = find_docker()
+    if docker is None:
+        raise ScanError("Nie znaleziono polecenia 'docker'. Zainstaluj i uruchom Docker Desktop.")
+
+    if subprocess.run([docker, "info"], capture_output=True, check=False).returncode != 0:
+        raise ScanError(
+            "Docker jest zainstalowany, ale nie odpowiada. Uruchom Docker Desktop, poczekaj aż "
+            "się włączy, a jeśli program działa w ograniczonym środowisku, uruchom go z zwykłego terminala."
+        )
 
     # A temp dir gives an ASCII-only path. Docker on Windows has trouble mounting
     # folders with non-ASCII names, and the project folder has one.
@@ -70,19 +77,20 @@ def run_zap_scan(
             target, mode, workdir,
             ajax=ajax, spider_minutes=spider_minutes, max_scan_minutes=max_scan_minutes,
         )
+        command[0] = docker
         result = subprocess.run(command, check=False)  # ZAP output goes straight to the console
         if result.returncode == _DOCKER_ERROR_EXIT_CODE:
             raise ScanError(
-                "Docker could not start the ZAP container (see the Docker error above). "
-                "Restart Docker Desktop and check that there is free disk space."
+                "Docker nie mógł uruchomić kontenera ZAP (zobacz błąd Dockera powyżej). "
+                "Uruchom ponownie Docker Desktop i sprawdź, czy jest wolne miejsce na dysku."
             )
 
         produced_report = Path(workdir) / _REPORT_FILE
         if not produced_report.exists():
             raise ScanError(
-                f"ZAP exited with code {result.returncode} and wrote no report. "
-                "Check that the target is reachable from the container "
-                "(e.g. http://host.docker.internal:3000)."
+                f"ZAP zakończył działanie z kodem {result.returncode} i nie zapisał raportu. "
+                "Sprawdź, czy kontener może połączyć się ze stroną "
+                "(np. http://host.docker.internal:3000)."
             )
         report_path = Path(report_path)
         report_path.parent.mkdir(parents=True, exist_ok=True)
@@ -181,6 +189,21 @@ jobs:
       reportDir: /zap/wrk
       reportFile: {_REPORT_FILE}
 """
+
+
+_DOCKER_LOCATIONS = (
+    "/Applications/Docker.app/Contents/Resources/bin/docker",
+    "/usr/local/bin/docker",
+    "/opt/homebrew/bin/docker",
+)
+
+
+def find_docker() -> str | None:
+    """Ścieżka do Dockera. Programy uruchamiane z edytora często nie mają /usr/local/bin w PATH."""
+    found = shutil.which("docker")
+    if found:
+        return found
+    return next((path for path in _DOCKER_LOCATIONS if os.access(path, os.X_OK)), None)
 
 
 class ScanError(RuntimeError):

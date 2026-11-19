@@ -132,7 +132,7 @@ def test_ml_cli_writes_a_sheet_and_stats(tmp_path, capsys):
     assert main(["--reports", str(REPORTS), "--labels", str(tmp_path), "sheet"]) == 0
     assert main(["--reports", str(REPORTS), "--labels", str(tmp_path), "stats"]) == 0
     output = capsys.readouterr().out
-    assert "rows" in output and "unlabeled" in output
+    assert "wierszy" in output and "nieoznaczone" in output
 
 
 def fill_labels(template, out, label_for):

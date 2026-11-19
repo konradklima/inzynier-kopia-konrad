@@ -126,10 +126,10 @@ def test_real_full_scan_report_end_to_end(tmp_path, capsys):
 
     output = capsys.readouterr().out
     assert exit_code == 0
-    assert "Issues to fix: 13 (3 high, 4 medium, 6 low)" in output
-    assert "Filtered out:  7 of 20 scanner alerts (35%)" in output
-    assert "Someone can get into your database" in output
-    assert "Detected 5 of 8 categories" in output
+    assert "Do naprawienia: 13 (3 wysokie, 4 średnie, 6 niskie)" in output
+    assert "Odrzucone:      7 z 20 alertów skanera (35%)" in output
+    assert "Ktoś może włamać się do Twojej bazy danych" in output
+    assert "Wykryto 5 z 8 kategorii" in output
     assert "SQL Injection" in html_report.read_text(encoding="utf-8")
     with Storage(database) as db:
         assert db.list_scans()[0].real_count == 13

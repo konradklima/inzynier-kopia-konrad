@@ -63,12 +63,12 @@ def classify(finding: Finding) -> Verdict:
 def classify_with_reason(finding: Finding) -> tuple[Verdict, str]:
     """The first matching rule wins."""
     if finding.confidence == Confidence.FALSE_POSITIVE:
-        return Verdict.FALSE_POSITIVE, "marked as a false positive by the scanner"
+        return Verdict.FALSE_POSITIVE, "skaner oznaczył jako fałszywy alarm"
     if finding.severity == Severity.INFO:
-        return Verdict.NOISE, "informational, not a threat by itself"
+        return Verdict.NOISE, "informacyjne, samo w sobie nie jest zagrożeniem"
     if finding.severity == Severity.LOW and finding.confidence == Confidence.LOW:
-        return Verdict.NOISE, "low risk and low scanner confidence"
-    return Verdict.REAL, f"{finding.severity.label} risk, {finding.confidence.label} confidence"
+        return Verdict.NOISE, "niskie ryzyko i niska pewność skanera"
+    return Verdict.REAL, f"ryzyko {finding.severity.pl}, pewność {finding.confidence.pl}"
 
 
 def priority_score(finding: Finding) -> int:

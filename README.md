@@ -1,4 +1,4 @@
-# alert-scanner
+# Projekt i implementacja systemu analizy bezpieczeństwa aplikacji internetowych z wykorzystaniem architektury wieloagentowej
 
 Projekt inżynierski, UKEN Kraków, Cyberbezpieczeństwo.
 Autorzy: Rudolf Baranko, Dawid Hamryszczak, Konrad Klima.
@@ -88,6 +88,26 @@ Model to płytkie drzewo decyzyjne, które `train` drukuje jako zestaw reguł. W
 metodą leave-one-app-out na DVWA, Juice Shopie i WebGoat: trening na wszystkich poza jedną,
 sprawdzenie na pominiętej. bWAPP to aplikacja testowa: nie służy do wyboru modelu ani do
 treningu. Typy alertów, których model nie widział w treningu, oceniają reguły.
+
+## Centrum sterowania (przeglądarka)
+
+Najprostsze uruchomienie (bez instalacji i bez aktywacji `.venv`):
+
+```sh
+python3 run.py
+```
+
+Na macOS można też kliknąć dwukrotnie plik `uruchom.command` w Finderze. Przeglądarka otworzy się automatycznie (domyślnie pod `http://127.0.0.1:8000`).
+
+Po zainstalowaniu pakietu (`pip install -e .`) działa też polecenie:
+
+```sh
+alert-scanner-web            # otwórz http://127.0.0.1:8000
+```
+
+W polu na górze wpisujesz dowolny adres (`przyklad.pl`, `https://moja-strona.com`,
+`localhost:3000`), wybierasz tryb i klikasz „Skanuj”. Adresy lokalne są zamieniane na
+`host.docker.internal`. Każdy skan wymaga zaznaczenia, że strona należy do użytkownika albo ma zgodę właściciela. Wyniki trafiają do `scans.db`, tak samo jak z linii poleceń.
 
 ## Testy
 

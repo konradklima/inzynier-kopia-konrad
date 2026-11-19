@@ -25,9 +25,9 @@ def render_html(target: str, assessment: Assessment, *, source: str = "",
                 generated_at: datetime | None = None, scope_note: str = "",
                 classifier: Classifier | None = None) -> str:
     generated_at = generated_at or datetime.now()
-    meta = [f"Target: {escape(target)}", f"Generated: {generated_at:%Y-%m-%d %H:%M}"]
+    meta = [f"Cel: {escape(target)}", f"Wygenerowano: {generated_at:%Y-%m-%d %H:%M}"]
     if source:
-        meta.insert(1, f"Source: {escape(source)}")
+        meta.insert(1, f"Źródło: {escape(source)}")
     return _PAGE_TEMPLATE.format(
         css=_CSS,
         title=escape(target),
@@ -42,23 +42,23 @@ def render_html(target: str, assessment: Assessment, *, source: str = "",
 
 def _summary(assessment: Assessment) -> str:
     counts = [
-        f"{count} {severity.label}"
+        f"{count} {severity.pl}"
         for severity, count in assessment.count_by_severity().items() if count
     ]
-    issues = f"<strong>{len(assessment.real)}</strong> issue(s) to fix"
+    issues = f"<strong>{len(assessment.real)}</strong> do naprawienia"
     if counts:
         issues += f" ({', '.join(counts)})"
-    return (f"{issues}. {assessment.filtered_out} of {assessment.total} scanner alerts filtered out "
+    return (f"{issues}. Odrzucono {assessment.filtered_out} z {assessment.total} alertów skanera "
             f"({assessment.filtered_out_pct:.0f}%).")
 
 
 def _findings_table(findings: list[Finding]) -> str:
     if not findings:
-        return '<p class="note">No issues to fix.</p>'
+        return '<p class="note">Nie ma nic do naprawienia.</p>'
     rows = "".join(_finding_row(finding) for finding in findings)
     return (
         '<div class="wrap"><table><thead><tr>'
-        '<th class="num">#</th><th>Risk</th><th>Issue</th><th>Where</th><th class="num">Count</th>'
+        '<th class="num">#</th><th>Ryzyko</th><th>Problem</th><th>Gdzie</th><th class="num">Liczba</th>'
         f"</tr></thead><tbody>{rows}</tbody></table></div>"
     )
 
@@ -71,10 +71,11 @@ def _finding_row(finding: Finding) -> str:
     if category.owasp != "-":
         technical_details.append(category.owasp)
     severity = finding.severity.label
+    severity_pl = finding.severity.pl
     return (
         '<tr class="finding">'
         f'<td class="num">{finding.rank}</td>'
-        f'<td><span class="risk risk-{severity}">{severity}</span></td>'
+        f'<td><span class="risk risk-{severity}">{severity_pl}</span></td>'
         f"<td><strong>{escape(category.title)}</strong>"
         f'<div class="tech">{escape(" | ".join(technical_details))}</div></td>'
         f"<td><code>{escape(finding.location.short_path())}</code></td>"
@@ -85,35 +86,35 @@ def _finding_row(finding: Finding) -> str:
 
 def _filtered_table(findings: list[Finding], reason) -> str:
     if not findings:
-        return '<p class="note">Nothing was filtered out.</p>'
+        return '<p class="note">Nic nie zostało odrzucone.</p>'
     rows = "".join(
-        f"<tr><td>{escape(finding.name)}</td><td>{finding.verdict.label}</td>"
+        f"<tr><td>{escape(finding.name)}</td><td>{finding.verdict.pl}</td>"
         f"<td>{escape(reason(finding)[1])}</td></tr>"
         for finding in findings
     )
     return (
-        '<div class="wrap"><table><thead><tr><th>Alert</th><th>Verdict</th><th>Reason</th>'
+        '<div class="wrap"><table><thead><tr><th>Alert</th><th>Werdykt</th><th>Powód</th>'
         f"</tr></thead><tbody>{rows}</tbody></table></div>"
     )
 
 
 _PAGE_TEMPLATE = """<!doctype html>
-<html lang="en">
+<html lang="pl">
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Scan report: {title}</title>
+<title>Raport ze skanu: {title}</title>
 <style>{css}</style>
 </head>
 <body>
 <main>
-<h1>Scan report</h1>
+<h1>Raport ze skanu</h1>
 <p class="note">{meta}</p>
 <p class="summary">{summary}</p>
 {scope}
-<h2>Issues to fix</h2>
+<h2>Do naprawienia</h2>
 {findings}
-<h2>Filtered out</h2>
+<h2>Odrzucone</h2>
 {filtered}
 </main>
 </body>

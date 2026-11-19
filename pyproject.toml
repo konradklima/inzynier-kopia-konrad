@@ -5,7 +5,7 @@ build-backend = "setuptools.build_meta"
 [project]
 name = "alert-scanner"
 version = "0.1.0"
-description = "Website security scanner that filters and ranks OWASP ZAP alerts."
+description = "Projekt i implementacja systemu analizy bezpieczeństwa aplikacji internetowych z wykorzystaniem architektury wieloagentowej."
 readme = "README.md"
 requires-python = ">=3.11"
 authors = [
@@ -22,6 +22,7 @@ ml = ["scikit-learn>=1.5", "joblib>=1.3"]
 [project.scripts]
 alert-scanner = "alert_scanner.cli:main"
 alert-scanner-ml = "alert_scanner.ml.cli:main"
+alert-scanner-web = "alert_scanner.web:main"
 
 [tool.setuptools.packages.find]
 where = ["src"]

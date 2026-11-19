@@ -85,6 +85,14 @@ class Severity(IntEnum):
     def label(self) -> str:
         return self.name.lower()
 
+    @property
+    def pl(self) -> str:
+        return {0: "informacyjne", 1: "niskie", 2: "średnie", 3: "wysokie"}[int(self)]
+
+    @property
+    def pl(self) -> str:
+        return {0: "informacyjne", 1: "niskie", 2: "średnie", 3: "wysokie"}[int(self)]
+
 
 class Confidence(IntEnum):
     """How sure the scanner is that the issue is real. Same scale as ZAP `confidence`."""
@@ -99,6 +107,10 @@ class Confidence(IntEnum):
     def label(self) -> str:
         return self.name.lower().replace("_", " ")
 
+    @property
+    def pl(self) -> str:
+        return {0: "fałszywy alarm", 1: "niska", 2: "średnia", 3: "wysoka", 4: "potwierdzona"}[int(self)]
+
 
 class Verdict(IntEnum):
     """Our decision about a finding, made in risk_rules (not by the scanner)."""
@@ -110,3 +122,7 @@ class Verdict(IntEnum):
     @property
     def label(self) -> str:
         return self.name.lower().replace("_", " ")
+
+    @property
+    def pl(self) -> str:
+        return {0: "realne", 1: "szum", 2: "fałszywy alarm"}[int(self)]

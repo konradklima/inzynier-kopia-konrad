@@ -93,7 +93,7 @@ def test_diff_lists_where_model_and_rules_disagree(labels_dir, tmp_path, capsys)
                          "--target", "http://host.docker.internal:3000", "--model", str(model_path)])
 
     assert exit_code == 0
-    assert "they disagree on" in capsys.readouterr().out
+    assert "różnią się w" in capsys.readouterr().out
 
 
 def test_train_then_classify_a_report_with_the_model(labels_dir, tmp_path, capsys):
@@ -109,5 +109,5 @@ def test_train_then_classify_a_report_with_the_model(labels_dir, tmp_path, capsy
 
     output = capsys.readouterr().out
     assert exit_code == 0
-    assert "Classifier: trained model" in output
-    assert "Issues to fix:" in output
+    assert "Klasyfikator: wytrenowany model" in output
+    assert "Do naprawienia:" in output

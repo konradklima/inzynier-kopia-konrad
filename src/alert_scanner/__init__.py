@@ -1,1 +1,1 @@
-"""Website security scanner that filters and ranks OWASP ZAP alerts."""
+"""Projekt i implementacja systemu analizy bezpieczeństwa aplikacji internetowych z wykorzystaniem architektury wieloagentowej."""

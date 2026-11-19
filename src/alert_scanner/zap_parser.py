@@ -45,7 +45,7 @@ def load_report(path: str | Path) -> dict[str, Any]:
         with open(path, encoding="utf-8") as report_file:
             return json.load(report_file)
     except json.JSONDecodeError as error:
-        raise ZapReportError(f"{path} is not valid JSON: {error}") from error
+        raise ZapReportError(f"{path} nie jest poprawnym plikiem JSON: {error}") from error
 
 
 def guess_target(report: dict[str, Any]) -> str:
@@ -90,7 +90,7 @@ class ZapReportError(ValueError):
 
 def _sites(report: dict[str, Any]) -> list[dict[str, Any]]:
     if not isinstance(report, dict) or "site" not in report:
-        raise ZapReportError("Missing 'site' key, this is not a ZAP JSON report.")
+        raise ZapReportError("Brak klucza 'site' - to nie jest raport JSON z ZAP-a.")
     sites = report["site"]
     # Older ZAP versions wrote a single site as an object instead of a list.
     return [sites] if isinstance(sites, dict) else list(sites)
@@ -134,7 +134,7 @@ def _to_enum(enum_class, raw_value: Any, field: str):
     try:
         return enum_class(int(raw_value))
     except (TypeError, ValueError) as error:
-        raise ZapReportError(f"Invalid value for '{field}': {raw_value!r}") from error
+        raise ZapReportError(f"Nieprawidłowa wartość pola '{field}': {raw_value!r}") from error
 
 
 def _positive_int(raw_value: Any) -> int | None:
