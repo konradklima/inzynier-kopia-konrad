@@ -9,19 +9,21 @@ from html import escape
 from pathlib import Path
 from alert_scanner import catalog
 from alert_scanner.domain import Finding
-from alert_scanner.risk_rules import Assessment, classify_with_reason
+from alert_scanner.risk_rules import Assessment, Classifier, classify_with_reason
 
 
 def write_html_report(path: str | Path, target: str, assessment: Assessment, *,
-                      source: str = "", scope_note: str = "") -> Path:
+                      source: str = "", scope_note: str = "", classifier: Classifier | None = None) -> Path:
     path = Path(path)
     path.parent.mkdir(parents=True, exist_ok=True)
-    path.write_text(render_html(target, assessment, source=source, scope_note=scope_note), encoding="utf-8")
+    html = render_html(target, assessment, source=source, scope_note=scope_note, classifier=classifier)
+    path.write_text(html, encoding="utf-8")
     return path
 
 
 def render_html(target: str, assessment: Assessment, *, source: str = "",
-                generated_at: datetime | None = None, scope_note: str = "") -> str:
+                generated_at: datetime | None = None, scope_note: str = "",
+                classifier: Classifier | None = None) -> str:
     generated_at = generated_at or datetime.now()
     meta = [f"Target: {escape(target)}", f"Generated: {generated_at:%Y-%m-%d %H:%M}"]
     if source:
@@ -33,7 +35,8 @@ def render_html(target: str, assessment: Assessment, *, source: str = "",
         summary=_summary(assessment),
         scope=f'<p class="note">{escape(scope_note)}</p>' if scope_note else "",
         findings=_findings_table(assessment.real),
-        filtered=_filtered_table([*assessment.noise, *assessment.false_positives]),
+        filtered=_filtered_table([*assessment.noise, *assessment.false_positives],
+                                 classifier.classify_with_reason if classifier else classify_with_reason),
     )
 
 
@@ -80,12 +83,12 @@ def _finding_row(finding: Finding) -> str:
     )
 
 
-def _filtered_table(findings: list[Finding]) -> str:
+def _filtered_table(findings: list[Finding], reason) -> str:
     if not findings:
         return '<p class="note">Nothing was filtered out.</p>'
     rows = "".join(
         f"<tr><td>{escape(finding.name)}</td><td>{finding.verdict.label}</td>"
-        f"<td>{escape(classify_with_reason(finding)[1])}</td></tr>"
+        f"<td>{escape(reason(finding)[1])}</td></tr>"
         for finding in findings
     )
     return (

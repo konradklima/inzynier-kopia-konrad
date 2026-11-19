@@ -10,23 +10,33 @@ Called from cli.py right after parsing: assess(parse_report(report, target)).
 from __future__ import annotations
 from collections import Counter
 from dataclasses import dataclass, field
+from typing import Protocol
 from alert_scanner.domain import Confidence, Finding, Severity, Verdict
 
-# TODO: ML classifier trained on labeled findings. It replaces classify_with_reason(),
-#       assess() stays as it is. Compare it with these rules (precision, recall, F1).
-# TODO: use the content of a finding (evidence, response code, path), not only severity
-#       and confidence. Now an open redirect ranks above SQL injection only because
-#       ZAP is more confident about it.
+
+class Classifier(Protocol):
+    """Anything that can judge a finding: these rules or the trained model (ml.model)."""
+
+    def classify_with_reason(self, finding: Finding) -> tuple[Verdict, str]: ...
+
+
+# TODO: use the content of a finding (evidence, response code, path) in the ranking,
+#       not only severity and confidence. Now an open redirect ranks above SQL injection
+#       only because ZAP is more confident about it.
 # TODO: merge duplicates, e.g. External Redirect and Off-site Redirect on the same URL.
 # TODO: agent pipeline: pass the ranked findings to the agents that fill in the
 #       animation templates (one writes the texts, the other reviews them).
 
 
-def assess(findings: list[Finding]) -> Assessment:
-    """Classify every finding and rank the real ones (rank 1 = most urgent)."""
+def assess(findings: list[Finding], classifier: Classifier | None = None) -> Assessment:
+    """Classify every finding and rank the real ones (rank 1 = most urgent).
+
+    `classifier` defaults to these rules; pass an ml.model.MlClassifier to use the model.
+    """
+    judge = classifier.classify_with_reason if classifier else classify_with_reason
     by_verdict: dict[Verdict, list[Finding]] = {verdict: [] for verdict in Verdict}
     for finding in findings:
-        by_verdict[classify(finding)].append(finding)
+        by_verdict[judge(finding)[0]].append(finding)
 
     # Ties: more occurrences first, then the name so the order is stable.
     ranked = sorted(
